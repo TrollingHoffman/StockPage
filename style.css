@@ -1,0 +1,309 @@
+/* הגדרות כלליות */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* כיוון טקסט ושפה */
+body {
+    direction: rtl;
+    text-align: right;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* עיצוב כותרות */
+h1, h2, h3 {
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* אזור החיפוש */
+.search-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+#stock-search {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+#search-button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#search-button:hover {
+    background-color: #2980b9;
+}
+
+/* אזור תצוגת המניה */
+.stock-display {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: none; /* יוצג רק לאחר חיפוש */
+}
+
+.stock-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.stock-current-value {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.stock-chart-container {
+    width: 100%;
+    height: 300px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* צבעי שינויים במניה */
+.positive {
+    color: #27ae60;
+}
+
+.negative {
+    color: #e74c3c;
+}
+
+.neutral {
+    color: #7f8c8d;
+}
+
+/* אזור החדשות */
+.news-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.news-tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    background-color: #f5f5f5;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.tab-button.active {
+    background-color: #ffffff;
+    border-bottom: 2px solid #3498db;
+    font-weight: bold;
+}
+
+.news-tab {
+    display: none;
+}
+
+.news-tab.active {
+    display: block;
+}
+
+.news-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.news-date {
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+/* אזור שאילתות Perplexity */
+.perplexity-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.perplexity-input {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+#perplexity-question {
+    width: 80%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 100px;
+}
+
+#ask-perplexity {
+    width: 20%;
+    padding: 10px;
+    background-color: #9b59b6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#ask-perplexity:hover {
+    background-color: #8e44ad;
+}
+
+.perplexity-result {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    min-height: 100px;
+}
+
+/* אזור המלצות אלגוריתמיות */
+.recommendations-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.recommendations-tabs {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+
+.recommendations-tab {
+    display: none;
+}
+
+.recommendations-tab.active {
+    display: block;
+}
+
+.stock-recommendation {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.recommendation-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.recommendation-value {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.recommendation-date {
+    font-size: 12px;
+    color: #7f8c8d;
+}
+
+.last-update {
+    text-align: left;
+    font-size: 12px;
+    color: #7f8c8d;
+    margin-top: 10px;
+}
+
+/* עיצוב פוטר */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    border-radius: 8px;
+}
+
+/* עיצוב רספונסיבי */
+@media (max-width: 768px) {
+    #stock-search {
+        width: 60%;
+    }
+    
+    .stock-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .news-tabs {
+        flex-wrap: wrap;
+    }
+    
+    .perplexity-input {
+        flex-direction: column;
+    }
+    
+    #perplexity-question {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    #ask-perplexity {
+        width: 100%;
+        margin-right: 0;
+    }
+}

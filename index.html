@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מערכת מחקר מניות</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <!-- אזור החיפוש -->
+    <header class="search-container">
+        <h1>מערכת מחקר מניות</h1>
+        <div class="search-box">
+            <input type="text" id="stock-search" placeholder="הזן שם מניה לחיפוש...">
+            <button id="search-button">חפש</button>
+        </div>
+    </header>
+
+    <!-- אזור תצוגת המניה -->
+    <section class="stock-display" id="stock-display">
+        <div class="stock-info">
+            <h2 id="stock-name">שם המניה</h2>
+            <div class="stock-current-value">
+                <span id="stock-value">0.00</span>
+                <span id="stock-change" class="neutral">0.00 (0.00%)</span>
+            </div>
+        </div>
+        <div class="stock-chart-container">
+            <div id="stock-chart">
+                <!-- כאן יוצג הגרף -->
+            </div>
+        </div>
+    </section>
+
+    <!-- אזור החדשות -->
+    <section class="news-container">
+        <h2>חדשות אחרונות</h2>
+        <div class="news-tabs">
+            <button class="tab-button active" data-source="x">X</button>
+            <button class="tab-button" data-source="facebook">Facebook</button>
+            <button class="tab-button" data-source="yahoo">Yahoo Finance</button>
+            <button class="tab-button" data-source="stockcal">Stockcal</button>
+        </div>
+        <div class="news-content">
+            <div id="news-x" class="news-tab active">
+                <!-- כאן יוצגו חדשות מ-X -->
+            </div>
+            <div id="news-facebook" class="news-tab">
+                <!-- כאן יוצגו חדשות מפייסבוק -->
+            </div>
+            <div id="news-yahoo" class="news-tab">
+                <!-- כאן יוצגו חדשות מיאהו פיננס -->
+            </div>
+            <div id="news-stockcal" class="news-tab">
+                <!-- כאן יוצגו חדשות מ-Stockcal -->
+            </div>
+        </div>
+    </section>
+
+    <!-- אזור שאילתות Perplexity -->
+    <section class="perplexity-container">
+        <h2>שאל את המומחה</h2>
+        <div class="perplexity-input">
+            <textarea id="perplexity-question" placeholder="שאל שאלה על המניה..."></textarea>
+            <button id="ask-perplexity">שאל</button>
+        </div>
+        <div class="perplexity-result" id="perplexity-result">
+            <!-- כאן תוצג התשובה מ-Perplexity -->
+        </div>
+    </section>
+
+    <!-- אזור המלצות אלגוריתמיות -->
+    <section class="recommendations-container">
+        <h2>המלצות מניות חמות</h2>
+        <div class="recommendations-tabs">
+            <button class="tab-button active" data-budget="low">תקציב נמוך</button>
+            <button class="tab-button" data-budget="high">תקציב גבוה</button>
+        </div>
+        <div class="recommendations-content">
+            <div id="low-budget" class="recommendations-tab active">
+                <!-- כאן יוצגו המלצות בתקציב נמוך -->
+            </div>
+            <div id="high-budget" class="recommendations-tab">
+                <!-- כאן יוצגו המלצות בתקציב גבוה -->
+            </div>
+        </div>
+        <div class="last-update">
+            <p>עדכון אחרון: <span id="last-update-time">--:--</span></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>מערכת מחקר מניות &copy; 2025</p>
+    </footer>
+
+    <script src="/back.js"></script>
+</body>
+</html>

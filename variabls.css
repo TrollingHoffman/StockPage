@@ -1,0 +1,94 @@
+/* קובץ משתני עיצוב גלובליים */
+:root {
+    /* צבעים בסיסיים - מצב רגיל (בהיר) */
+    --color-primary: #2773ff;
+    --color-secondary: #00c07f;
+    --color-accent: #ff6b35;
+    --color-danger: #e74c3c;
+    --color-success: #27ae60;
+    --color-warning: #f39c12;
+    --color-info: #3498db;
+    
+    /* גוונים של אפור */
+    --color-gray-100: #f8f9fa;
+    --color-gray-200: #e9ecef;
+    --color-gray-300: #dee2e6;
+    --color-gray-400: #ced4da;
+    --color-gray-500: #adb5bd;
+    --color-gray-600: #6c757d;
+    --color-gray-700: #495057;
+    --color-gray-800: #343a40;
+    --color-gray-900: #212529;
+    
+    /* צבעי רקע ותוכן */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f7fa;
+    --bg-card: #ffffff;
+    --bg-input: #ffffff;
+    
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --text-muted: #6c757d;
+    --text-light: #f8f9fa;
+    
+    /* צבעי מניות */
+    --stock-positive: #00c07f;
+    --stock-negative: #e74c3c;
+    --stock-neutral: #6c757d;
+    --stock-fire: #ff6b35;
+    --stock-superhot: #ff3a15;
+    
+    /* צללים */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    
+    /* גבולות */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-color: #dee2e6;
+    
+    /* אנימציות */
+    --transition-speed: 0.3s;
+}
+
+/* מצב כהה */
+[data-theme="dark"] {
+    /* צבעי רקע ותוכן - מצב כהה */
+    --bg-primary: #121212;
+    --bg-secondary: #1e1e1e;
+    --bg-card: #2a2a2a;
+    --bg-input: #333333;
+    
+    --text-primary: #f8f9fa;
+    --text-secondary: #e9ecef;
+    --text-muted: #adb5bd;
+    --text-light: #f8f9fa;
+    
+    /* גוונים של אפור - מצב כהה */
+    --color-gray-900: #f8f9fa;
+    --color-gray-800: #e9ecef;
+    --color-gray-700: #dee2e6;
+    --color-gray-600: #ced4da;
+    --color-gray-500: #adb5bd;
+    --color-gray-400: #6c757d;
+    --color-gray-300: #495057;
+    --color-gray-200: #343a40;
+    --color-gray-100: #212529;
+    
+    /* צבעי מניות - מצב כהה (מעט יותר בהירים) */
+    --stock-positive: #00e599;
+    --stock-negative: #ff6b6b;
+    --stock-neutral: #adb5bd;
+    --stock-fire: #ff8a65;
+    --stock-superhot: #ff5252;
+    
+    /* צללים - מצב כהה */
+    --shadow-sm: 0 1px 2px rgba(255, 255, 255, 0.05);
+    --shadow-md: 0 4px 6px rgba(255, 255, 255, 0.07);
+    --shadow-lg: 0 10px 15px rgba(255, 255, 255, 0.07);
+    
+    /* גבולות - מצב כהה */
+    --border-color: #454545;
+}
