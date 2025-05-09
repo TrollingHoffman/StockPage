@@ -3,18 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת מחקר מניות</title>
+    <title>StockCal - מערכת מחקר מניות</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
+    <!-- תפריט ניווט -->
+    <nav class="navbar" id="main-navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="/" class="logo">StockCal</a>
+            </div>
+            <div class="navbar-links">
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="/index.html" class="nav-link active">עמוד הבית</a></li>
+                    <li class="nav-item"><a href="/info.html" class="nav-link">מושגים</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" id="theme-toggle">
+                        <i class="fas fa-moon"></i>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
     <!-- אזור החיפוש -->
     <header class="search-container">
         <h1>מערכת מחקר מניות</h1>
         <div class="search-box">
-            <input type="text" id="stock-search" placeholder="הזן שם מניה לחיפוש...">
-            <button id="search-button">חפש</button>
+            <input type="text" id="stock-search" placeholder="הזן שם מניה או סמל לחיפוש...">
+                <button id="search-button">חפש</button>
         </div>
     </header>
+
+    <!-- אזור האלגוריתמים והסננים -->
+    <section class="filters-container">
+        <h2>סננים וזיהוי הזדמנויות</h2>
+        <div class="filters-tabs">
+            <button class="tab-button active" data-filter="momentum">מומנטום</button>
+            <button class="tab-button" data-filter="etf-leverage">ETF מינוף</button>
+            <button class="tab-button" data-filter="technical">אינדיקטורים טכניים</button>
+        </div>
+        <div class="filters-content">
+            <div id="momentum-filter" class="filter-tab active">
+                <div class="filter-params">
+                    <div class="param-group">
+                        <label for="momentum-threshold">סף מומנטום (%)</label>
+                        <input type="number" id="momentum-threshold" value="1.5" step="0.25" min="0.5">
+                    </div>
+                    <div class="param-group">
+                        <label for="momentum-timeframe">מסגרת זמן (דק')</label>
+                        <input type="number" id="momentum-timeframe" value="30" step="5" min="5">
+                    </div>
+                    <div class="param-group">
+                        <label for="profit-target">יעד רווח (%)</label>
+                        <input type="number" id="profit-target" value="2" step="0.5" min="0.5">
+                    </div>
+                </div>
+                <button id="apply-momentum" class="filter-button">הפעל סנן</button>
+                <div id="momentum-results" class="filter-results">
+                    <!-- תוצאות סנן המומנטום יוצגו כאן -->
+                </div>
+            </div>
+            <div id="etf-leverage-filter" class="filter-tab">
+                <div class="filter-params">
+                    <div class="param-group">
+                        <label for="etf-sector">סקטור</label>
+                        <select id="etf-sector">
+                            <option value="all">הכל</option>
+                            <option value="gold">זהב</option>
+                            <option value="oil">נפט</option>
+                            <option value="gas">גז טבעי</option>
+                            <option value="semiconductor">מוליכים למחצה</option>
+                            <option value="nasdaq">נאסד"ק</option>
+                            <option value="sp500">S&P 500</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label for="mismatch-threshold">סף אי התאמה (%)</label>
+                        <input type="number" id="mismatch-threshold" value="0.8" step="0.1" min="0.1">
+                    </div>
+                    <div class="param-group">
+                        <label for="etf-direction">כיוון</label>
+                        <select id="etf-direction">
+                            <option value="both">שני הכיוונים</option>
+                            <option value="up">עלייה</option>
+                            <option value="down">ירידה</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="apply-etf" class="filter-button">הפעל סנן</button>
+                <div id="etf-results" class="filter-results">
+                    <!-- תוצאות סנן ETF מינוף יוצגו כאן -->
+                </div>
+            </div>
+            <div id="technical-filter" class="filter-tab">
+                <div class="filter-params">
+                    <div class="param-group">
+                        <label for="technical-indicator">אינדיקטור</label>
+                        <select id="technical-indicator">
+                            <option value="rsi">RSI</option>
+                            <option value="macd">MACD</option>
+                            <option value="bb">Bollinger Bands</option>
+                            <option value="ema">EMA Cross</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label for="condition">תנאי</label>
+                        <select id="condition">
+                            <option value="oversold">Oversold (RSI < 30)</option>
+                            <option value="overbought">Overbought (RSI > 70)</option>
+                            <option value="crossover">Crossover</option>
+                            <option value="divergence">Divergence</option>
+                        </select>
+                    </div>
+                    <div class="param-group">
+                        <label for="timeframe">מסגרת זמן</label>
+                        <select id="timeframe">
+                            <option value="intraday">תוך יומי</option>
+                            <option value="daily">יומי</option>
+                            <option value="weekly">שבועי</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="apply-technical" class="filter-button">הפעל סנן</button>
+                <div id="technical-results" class="filter-results">
+                    <!-- תוצאות סנן אינדיקטורים טכניים יוצגו כאן -->
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- אזור תצוגת המניה -->
     <section class="stock-display" id="stock-display">
@@ -25,9 +147,42 @@
                 <span id="stock-change" class="neutral">0.00 (0.00%)</span>
             </div>
         </div>
+        <div class="stock-metrics">
+            <div class="metric">
+                <span class="metric-label">נפח מסחר</span>
+                <span class="metric-value" id="stock-volume">0</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">מחזור</span>
+                <span class="metric-value" id="stock-turnover">$0</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">שווי שוק</span>
+                <span class="metric-value" id="stock-market-cap">$0</span>
+            </div>
+            <div class="metric">
+                <span class="metric-label">מכפיל רווח</span>
+                <span class="metric-value" id="stock-pe">0</span>
+            </div>
+        </div>
         <div class="stock-chart-container">
             <div id="stock-chart">
                 <!-- כאן יוצג הגרף -->
+            </div>
+        </div>
+        <div class="chart-controls">
+            <div class="range-selector">
+                <button class="range-button active" data-range="1d">יום</button>
+                <button class="range-button" data-range="5d">שבוע</button>
+                <button class="range-button" data-range="1m">חודש</button>
+                <button class="range-button" data-range="3m">רבעון</button>
+                <button class="range-button" data-range="1y">שנה</button>
+                <button class="range-button" data-range="5y">5 שנים</button>
+            </div>
+            <div class="chart-type-selector">
+                <button class="chart-type-button active" data-type="line">קו</button>
+                <button class="chart-type-button" data-type="candle">נרות</button>
+                <button class="chart-type-button" data-type="ohlc">OHLC</button>
             </div>
         </div>
     </section>
@@ -36,36 +191,24 @@
     <section class="news-container">
         <h2>חדשות אחרונות</h2>
         <div class="news-tabs">
-            <button class="tab-button active" data-source="x">X</button>
-            <button class="tab-button" data-source="facebook">Facebook</button>
+            <button class="tab-button active" data-source="all">הכל</button>
             <button class="tab-button" data-source="yahoo">Yahoo Finance</button>
-            <button class="tab-button" data-source="stockcal">Stockcal</button>
+            <button class="tab-button" data-source="finnhub">Finnhub</button>
+            <button class="tab-button" data-source="stockdata">StockData</button>
         </div>
         <div class="news-content">
-            <div id="news-x" class="news-tab active">
-                <!-- כאן יוצגו חדשות מ-X -->
-            </div>
-            <div id="news-facebook" class="news-tab">
-                <!-- כאן יוצגו חדשות מפייסבוק -->
+            <div id="news-all" class="news-tab active">
+                <!-- כאן יוצגו כל החדשות -->
             </div>
             <div id="news-yahoo" class="news-tab">
                 <!-- כאן יוצגו חדשות מיאהו פיננס -->
             </div>
-            <div id="news-stockcal" class="news-tab">
-                <!-- כאן יוצגו חדשות מ-Stockcal -->
+            <div id="news-finnhub" class="news-tab">
+                <!-- כאן יוצגו חדשות מ-Finnhub -->
             </div>
-        </div>
-    </section>
-
-    <!-- אזור שאילתות Perplexity -->
-    <section class="perplexity-container">
-        <h2>שאל את המומחה</h2>
-        <div class="perplexity-input">
-            <textarea id="perplexity-question" placeholder="שאל שאלה על המניה..."></textarea>
-            <button id="ask-perplexity">שאל</button>
-        </div>
-        <div class="perplexity-result" id="perplexity-result">
-            <!-- כאן תוצג התשובה מ-Perplexity -->
+            <div id="news-stockdata" class="news-tab">
+                <!-- כאן יוצגו חדשות מ-StockData -->
+            </div>
         </div>
     </section>
 
@@ -89,10 +232,60 @@
         </div>
     </section>
 
+    <!-- אזור בואו לחקור עוד -->
+<section id="explore-more" class="explore-section">
+    <div class="container">
+        <h2 class="section-title">בואו לחקור עוד</h2>
+        <div class="explore-grid">
+            <a href="https://www.perplexity.ai" target="_blank" class="explore-card perplexity">
+                <div class="explore-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Perplexity</h3>
+                <p>חיפוש חכם עם AI לחקר מניות ושווקים</p>
+            </a>
+            <a href="https://finance.yahoo.com" target="_blank" class="explore-card yahoo">
+                <div class="explore-icon">
+                    <i class="fab fa-yahoo"></i>
+                </div>
+                <h3>Yahoo Finance</h3>
+                <p>נתוני מניות וחדשות פיננסיות מקיפות</p>
+            </a>
+            <a href="https://chat.openai.com" target="_blank" class="explore-card chatgpt">
+                <div class="explore-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <h3>ChatGPT</h3>
+                <p>שאל שאלות ונתח מידע פיננסי בעזרת AI</p>
+            </a>
+        </div>
+    </div>
+</section>
+
     <footer>
-        <p>מערכת מחקר מניות &copy; 2025</p>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>StockCal</h3>
+                <p>מערכת מחקר מניות מתקדמת</p>
+            </div>
+            <div class="footer-links">
+                <h4>קישורים</h4>
+                <ul>
+                    <li><a href="/">עמוד הבית</a></li>
+                    <li><a href="/concepts.html">מושגים</a></li>
+                </ul>
+            </div>
+            <div class="footer-disclaimer">
+                <h4>הצהרה</h4>
+                <p>המידע המוצג באתר זה הוא למטרות מידע בלבד ואינו מהווה המלצה להשקעה. השקעה בשוק ההון כרוכה בסיכונים.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 StockCal. כל הזכויות שמורות.</p>
+        </div>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chart.js/3.9.1/chart.min.js"></script>
     <script src="/back.js"></script>
 </body>
 </html>

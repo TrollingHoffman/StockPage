@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מילון מושגים פיננסיים | StockTracker</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/info.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- תפריט ניווט זהה לעמוד הראשי -->
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <a href="index.html">StockTracker <i class="fas fa-chart-line"></i></a>
+                </div>
+                <div class="hamburger" id="hamburger">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="index.html" class="nav-link">עמוד ראשי</a></li>
+                    <li class="nav-item"><a href="concepts.html" class="nav-link active">מילון מושגים</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">אודות</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="החלפת מצב תצוגה">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="concept-main">
+        <!-- כותרת ומבוא -->
+        <section class="concepts-hero">
+            <div class="container">
+                <h1 class="page-title">מילון מושגים פיננסיים</h1>
+                <p class="page-description">למדו על המושגים החשובים בעולם שוק ההון והמסחר במניות</p>
+                
+                <!-- חיפוש מושגים -->
+                <div class="concept-search-container">
+                    <div class="concept-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="concept-search" placeholder="חפשו מושג, למשל: מכפיל רווח, RSI, תשואת דיבידנד...">
+                        <button id="search-clear" class="search-clear-btn"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- סיכום השיטה -->
+        <section class="algorithm-summary">
+            <div class="container">
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="icon-container">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <h2>כיצד האלגוריתם שלנו עובד?</h2>
+                    </div>
+                    <div class="summary-content">
+                        <p>האלגוריתם של StockTracker משלב מספר פרמטרים פיננסיים לניתוח וסינון מניות, כולל:</p>
+                        <div class="summary-grid">
+                            <div class="summary-item">
+                                <div class="item-icon"><i class="fas fa-chart-line"></i></div>
+                                <h3>מומנטום</h3>
+                                <p>ניתוח מגמות מחיר לזיהוי המשכיות תנועה בטווח הקצר והבינוני</p>
+                            </div>
+                            <div class="summary-item">
+                                <div class="item-icon"><i class="fas fa-calculator"></i></div>
+                                <h3>מכפילים</h3>
+                                <p>שימוש במכפילי רווח (P/E), מכפילי מכירות (P/S) ומכפילים נוספים להערכת שווי</p>
+                            </div>
+                            <div class="summary-item">
+                                <div class="item-icon"><i class="fas fa-chart-bar"></i></div>
+                                <h3>אינדיקטורים טכניים</h3>
+                                <p>שילוב אינדיקטורים כגון RSI, MACD ותמיכות/התנגדויות לאיתור הזדמנויות</p>
+                            </div>
+                            <div class="summary-item">
+                                <div class="item-icon"><i class="fas fa-balance-scale"></i></div>
+                                <h3>ניתוח סיכון-תשואה</h3>
+                                <p>כימות הסיכון אל מול התשואה הפוטנציאלית בכל הזדמנות השקעה</p>
+                            </div>
+                        </div>
+                        <p class="summary-note">האלגוריתם מדרג מניות בסקאלה של 1-10, כאשר 10 היא ההמלצה החזקה ביותר, ומציע פעולה מומלצת (קנייה, מכירה או המתנה).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- קטגוריות המושגים -->
+        <section class="concepts-categories">
+            <div class="container">
+                <h2 class="section-title">קטגוריות מושגים</h2>
+                <div class="categories-grid">
+                    <div class="category-card" data-category="basic">
+                        <div class="category-icon"><i class="fas fa-book"></i></div>
+                        <h3>מושגי בסיס</h3>
+                        <p>מושגים בסיסיים להבנת שוק ההון</p>
+                    </div>
+                    <div class="category-card" data-category="technical">
+                        <div class="category-icon"><i class="fas fa-chart-line"></i></div>
+                        <h3>מדדים טכניים</h3>
+                        <p>אינדיקטורים ומדדים לניתוח טכני</p>
+                    </div>
+                    <div class="category-card" data-category="fundamental">
+                        <div class="category-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                        <h3>ניתוח פונדמנטלי</h3>
+                        <p>מושגים להערכת שווי ומצב פיננסי</p>
+                    </div>
+                    <div class="category-card" data-category="strategy">
+                        <div class="category-icon"><i class="fas fa-chess"></i></div>
+                        <h3>אסטרטגיות מסחר</h3>
+                        <p>שיטות למסחר והשקעה בשוק ההון</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- המושגים עצמם -->
+        <section class="concepts-list" id="concepts-container">
+            <div class="container">
+                <h2 class="section-title">מילון מושגים</h2>
+                <div class="concepts-filter">
+                    <button class="filter-btn active" data-filter="all">הכל</button>
+                    <button class="filter-btn" data-filter="basic">מושגי בסיס</button>
+                    <button class="filter-btn" data-filter="technical">מדדים טכניים</button>
+                    <button class="filter-btn" data-filter="fundamental">ניתוח פונדמנטלי</button>
+                    <button class="filter-btn" data-filter="strategy">אסטרטגיות</button>
+                </div>
+                <div class="concepts-grid" id="concepts-grid">
+                    <!-- מושגי בסיס -->
+                    <div class="concept-card" data-category="basic">
+                        <h3>מניה (Stock)</h3>
+                        <p>נייר ערך המייצג בעלות בחלק מחברה ציבורית. רכישת מניה מהווה בעלות על חלק יחסי מנכסי החברה והזכות לחלק מרווחיה.</p>
+                    </div>
+                    <div class="concept-card" data-category="basic">
+                        <h3>נזילות (Liquidity)</h3>
+                        <p>מידת הקלות שבה ניתן לקנות או למכור נכס פיננסי ללא השפעה משמעותית על מחירו. מניות עם מחזור מסחר גבוה נחשבות לנזילות יותר.</p>
+                    </div>
+                    <div class="concept-card" data-category="basic">
+                        <h3>דיבידנד (Dividend)</h3>
+                        <p>חלוקת רווחים של חברה לבעלי מניותיה, בדרך כלל במזומן. מבוטא לרוב באחוזים מערך המניה (תשואת דיבידנד).</p>
+                    </div>
+                    <div class="concept-card" data-category="basic">
+                        <h3>תנודתיות (Volatility)</h3>
+                        <p>המידה שבה מחיר נכס פיננסי משתנה לאורך זמן. תנודתיות גבוהה מעידה על סיכון גבוה יותר, אך גם על פוטנציאל רווח גדול יותר.</p>
+                    </div>
+                    
+                    <!-- מדדים טכניים -->
+                    <div class="concept-card" data-category="technical">
+                        <h3>RSI (Relative Strength Index)</h3>
+                        <p>מדד מומנטום הנע בין 0 ל-100 ומשמש לזיהוי תנאי קניית יתר (מעל 70) או מכירת יתר (מתחת ל-30). מחושב לפי היחס בין תנועות מחיר חיוביות לשליליות.</p>
+                    </div>
+                    <div class="concept-card" data-category="technical">
+                        <h3>MACD (Moving Average Convergence Divergence)</h3>
+                        <p>אינדיקטור המציג את היחס בין שני ממוצעים נעים של מחיר הנכס. משמש לזיהוי שינויי מגמה ועוצמת מגמה.</p>
+                    </div>
+                    <div class="concept-card" data-category="technical">
+                        <h3>ממוצע נע (Moving Average)</h3>
+                        <p>חישוב ממוצע מחירי סגירה של נכס לאורך תקופה מוגדרת. משמש לזיהוי מגמות והחלקת תנודות מחיר.</p>
+                    </div>
+                    <div class="concept-card" data-category="technical">
+                        <h3>תמיכה והתנגדות (Support & Resistance)</h3>
+                        <p>רמות מחיר שבהן צפויה עצירה או היפוך של תנועת המחיר. תמיכה היא רמה שמעליה המחיר נוטה לעלות, והתנגדות היא רמה שמתחתיה המחיר נוטה לרדת.</p>
+                    </div>
+                    
+                    <!-- ניתוח פונדמנטלי -->
+                    <div class="concept-card" data-category="fundamental">
+                        <h3>מכפיל רווח (P/E Ratio)</h3>
+                        <p>היחס בין מחיר המניה לרווח למניה. מכפיל גבוה עשוי להצביע על ציפיות לצמיחה גבוהה או על הערכת יתר.</p>
+                    </div>
+                    <div class="concept-card" data-category="fundamental">
+                        <h3>שווי שוק (Market Cap)</h3>
+                        <p>הערך הכולל של מניות החברה בשוק, מחושב על ידי הכפלת מחיר המניה במספר המניות המונפקות. מסווג חברות לקטנות, בינוניות וגדולות.</p>
+                    </div>
+                    <div class="concept-card" data-category="fundamental">
+                        <h3>מכפיל מכירות (P/S Ratio)</h3>
+                        <p>היחס בין שווי השוק של החברה להכנסותיה השנתיות. משמש להערכת חברות שעדיין אינן רווחיות.</p>
+                    </div>
+                    <div class="concept-card" data-category="fundamental">
+                        <h3>תשואת דיבידנד (Dividend Yield)</h3>
+                        <p>היחס בין גובה הדיבידנד השנתי למחיר המניה, מבוטא באחוזים. מדד חשוב למשקיעי הכנסה.</p>
+                    </div>
+                    
+                    <!-- אסטרטגיות מסחר -->
+                    <div class="concept-card" data-category="strategy">
+                        <h3>השקעת ערך (Value Investing)</h3>
+                        <p>אסטרטגיה המתמקדת ברכישת מניות הנסחרות במחיר נמוך ביחס לערכן הפנימי, על פי ניתוח פונדמנטלי.</p>
+                    </div>
+                    <div class="concept-card" data-category="strategy">
+                        <h3>השקעת צמיחה (Growth Investing)</h3>
+                        <p>אסטרטגיה המתמקדת בחברות בעלות פוטנציאל צמיחה גבוה, גם במחיר מכפילים גבוהים יחסית.</p>
+                    </div>
+                    <div class="concept-card" data-category="strategy">
+                        <h3>מסחר יומי (Day Trading)</h3>
+                        <p>אסטרטגיה של פתיחת וסגירת עסקאות באותו יום מסחר, המתבססת על תנודות מחיר קצרות טווח.</p>
+                    </div>
+                    <div class="concept-card" data-category="strategy">
+                        <h3>השקעה לטווח ארוך (Long-term Investing)</h3>
+                        <p>אסטרטגיה המתמקדת באחזקת מניות לתקופות ארוכות (שנים), המתבססת על צמיחה מתמשכת ודיבידנדים.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- סוגי גרפים וזיהוי מגמות -->
+        <section class="charts-section">
+            <div class="container">
+                <h2 class="section-title">סוגי גרפים וזיהוי מגמות</h2>
+                <div class="charts-grid">
+                    <div class="chart-type-card">
+                        <div class="chart-type-header">
+                            <h3>גרף קווי (Line Chart)</h3>
+                        </div>
+                        <div class="chart-type-image">
+                            <img src="https://via.placeholder.com/350x200" alt="גרף קווי" class="chart-image">
+                        </div>
+                        <div class="chart-type-description">
+                            <p>הגרף הבסיסי ביותר, המציג את מחיר הסגירה של הנכס לאורך זמן. קל להבנה ומספק תמונה ברורה של המגמה הכללית.</p>
+                            <div class="chart-pattern">
+                                <h4>זיהוי מגמות:</h4>
+                                <ul>
+                                    <li><span class="trend up">מגמת עלייה:</span> סדרה של שיאים ושפלים גבוהים יותר</li>
+                                    <li><span class="trend down">מגמת ירידה:</span> סדרה של שיאים ושפלים נמוכים יותר</li>
+                                    <li><span class="trend sideways">מגמה צידית:</span> תנועה אופקית ללא כיוון ברור</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-type-card">
+                        <div class="chart-type-header">
+                            <h3>גרף נרות (Candlestick Chart)</h3>
+                        </div>
+                        <div class="chart-type-image">
+                            <img src="https://via.placeholder.com/350x200" alt="גרף נרות" class="chart-image">
+                        </div>
+                        <div class="chart-type-description">
+                            <p>גרף המציג את פתיחה, סגירה, שיא ושפל לכל תקופת זמן. מספק מידע רב יותר מגרף קווי ומאפשר זיהוי דפוסי מסחר.</p>
+                            <div class="chart-pattern">
+                                <h4>דפוסי נרות עיקריים:</h4>
+                                <ul>
+                                    <li><span class="pattern">דוג'י:</span> נר עם גוף קטן מאוד, מעיד על היסוס בשוק</li>
+                                    <li><span class="pattern">פטיש:</span> נר עם צל תחתון ארוך, עשוי להצביע על תחתית</li>
+                                    <li><span class="pattern">בליעה:</span> נר גדול "בולע" את הנר הקודם, מעיד על היפוך אפשרי</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-type-card">
+                        <div class="chart-type-header">
+                            <h3>גרף OHLC (Open-High-Low-Close)</h3>
+                        </div>
+                        <div class="chart-type-image">
+                            <img src="https://via.placeholder.com/350x200" alt="גרף OHLC" class="chart-image">
+                        </div>
+                        <div class="chart-type-description">
+                            <p>דומה לגרף נרות, אך מציג את המידע באמצעות קווים וסימונים. הקו האופקי משמאל מייצג את הפתיחה, מימין את הסגירה, והקו האנכי מייצג את הטווח בין השיא לשפל.</p>
+                            <div class="chart-pattern">
+                                <h4>יתרונות:</h4>
+                                <ul>
+                                    <li>תצוגה נקייה יחסית</li>
+                                    <li>קל לזהות טווחי מסחר יומיים</li>
+                                    <li>מתאים במיוחד לניתוח טכני מתקדם</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-type-card">
+                        <div class="chart-type-header">
+                            <h3>דפוסים טכניים נפוצים</h3>
+                        </div>
+                        <div class="chart-type-image">
+                            <img src="https://via.placeholder.com/350x200" alt="דפוסים טכניים" class="chart-image">
+                        </div>
+                        <div class="chart-type-description">
+                            <p>דפוסים חוזרים בגרפים שעשויים להצביע על המשך מגמה או היפוך מגמה.</p>
+                            <div class="chart-pattern">
+                                <h4>דפוסים מרכזיים:</h4>
+                                <ul>
+                                    <li><span class="pattern">ראש וכתפיים:</span> דפוס היפוך מגמה נפוץ</li>
+                                    <li><span class="pattern">משולש:</span> דפוס המשכיות או היפוך, בהתאם לצורתו</li>
+                                    <li><span class="pattern">דגל/דגלון:</span> דפוס המשכיות מגמה לאחר תיקון קצר</li>
+                                    <li><span class="pattern">תעלה:</span> תנועת מחיר בין שני קווים מקבילים</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    StockTracker <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">עמוד ראשי</a>
+                    <a href="concepts.html">מילון מושגים</a>
+                    <a href="#about">אודות</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-copyright">
+                &copy; 2023 StockTracker. כל הזכויות שמורות.
+            </div>
+        </div>
+    </footer>
+    <script src="/back.js"></script>
+    <script src="concepts.js"></script>
+    <script>
+        // סקריפט בסיסי להתאמת תצוגה
+        document.addEventListener('DOMContentLoaded', function() {
+            // מנגנון תפריט המבורגר
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+            
+            // מנגנון החלפת מצב תצוגה (כהה/בהיר)
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                const currentTheme = document.documentElement.getAttribute('data-theme');
+                
+                if (currentTheme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                } else {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

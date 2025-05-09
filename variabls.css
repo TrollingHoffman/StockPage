@@ -2,8 +2,14 @@
 :root {
     /* צבעים בסיסיים - מצב רגיל (בהיר) */
     --color-primary: #2773ff;
+    --color-primary-light: #5a94fe;
+    --color-primary-dark: #0056e0;
     --color-secondary: #00c07f;
+    --color-secondary-light: #34dfa4;
+    --color-secondary-dark: #00a36b;
     --color-accent: #ff6b35;
+    --color-accent-light: #ff8a5e;
+    --color-accent-dark: #e54b16;
     --color-danger: #e74c3c;
     --color-success: #27ae60;
     --color-warning: #f39c12;
@@ -25,6 +31,9 @@
     --bg-secondary: #f5f7fa;
     --bg-card: #ffffff;
     --bg-input: #ffffff;
+    --bg-header: #f0f4fa;
+    --bg-footer: #2c3e50;
+    --bg-navbar: #ffffff;
     
     --text-primary: #212529;
     --text-secondary: #495057;
@@ -42,15 +51,47 @@
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-navbar: 0 2px 10px rgba(0, 0, 0, 0.08);
     
     /* גבולות */
     --border-radius-sm: 4px;
     --border-radius-md: 8px;
     --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
     --border-color: #dee2e6;
     
     /* אנימציות */
     --transition-speed: 0.3s;
+    --transition-speed-fast: 0.15s;
+    
+    /* מרווחים */
+    --spacing-xs: 0.25rem;  /* 4px */
+    --spacing-sm: 0.5rem;   /* 8px */
+    --spacing-md: 1rem;     /* 16px */
+    --spacing-lg: 1.5rem;   /* 24px */
+    --spacing-xl: 2rem;     /* 32px */
+    --spacing-xxl: 3rem;    /* 48px */
+    
+    /* טיפוגרפיה */
+    --font-size-xs: 0.75rem;   /* 12px */
+    --font-size-sm: 0.875rem;  /* 14px */
+    --font-size-md: 1rem;      /* 16px */
+    --font-size-lg: 1.125rem;  /* 18px */
+    --font-size-xl: 1.25rem;   /* 20px */
+    --font-size-2xl: 1.5rem;   /* 24px */
+    --font-size-3xl: 1.875rem; /* 30px */
+    --font-size-4xl: 2.25rem;  /* 36px */
+    
+    /* עובי גופן */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* גריד */
+    --container-max-width: 1200px;
+    --container-padding: 1rem;
+    --navbar-height: 70px;
 }
 
 /* מצב כהה */
@@ -60,6 +101,9 @@
     --bg-secondary: #1e1e1e;
     --bg-card: #2a2a2a;
     --bg-input: #333333;
+    --bg-header: #1a1a1a;
+    --bg-footer: #1a1a1a;
+    --bg-navbar: #1a1a1a;
     
     --text-primary: #f8f9fa;
     --text-secondary: #e9ecef;
@@ -85,10 +129,20 @@
     --stock-superhot: #ff5252;
     
     /* צללים - מצב כהה */
-    --shadow-sm: 0 1px 2px rgba(255, 255, 255, 0.05);
-    --shadow-md: 0 4px 6px rgba(255, 255, 255, 0.07);
-    --shadow-lg: 0 10px 15px rgba(255, 255, 255, 0.07);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.25);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.3);
+    --shadow-navbar: 0 2px 10px rgba(0, 0, 0, 0.3);
     
     /* גבולות - מצב כהה */
     --border-color: #454545;
+    
+    /* צבעים בסיסיים - מצב כהה */
+    --color-primary-light: #3d73cc;
+    --color-primary: #2460c5;
+    --color-primary-dark: #1e51a8;
+    
+    --color-secondary-light: #1eae7c;
+    --color-secondary: #0e9b6a;
+    --color-secondary-dark: #087f55;
 }

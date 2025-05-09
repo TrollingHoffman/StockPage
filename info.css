@@ -1,0 +1,542 @@
+/* === עמוד המושגים - סגנונות === */
+
+/* כותרת העמוד והחיפוש */
+.concepts-hero {
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    color: var(--white);
+    text-align: center;
+    border-radius: 0 0 var(--border-radius-xl) var(--border-radius-xl);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.page-title {
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--spacing-sm);
+    position: relative;
+    display: inline-block;
+}
+
+.page-title:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius-md);
+}
+
+.page-description {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-lg);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.concept-search-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.concept-search-box {
+    display: flex;
+    align-items: center;
+    background-color: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    box-shadow: var(--shadow-lg);
+    transition: all 0.3s ease;
+}
+
+.concept-search-box:focus-within {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3), var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.concept-search-box i {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    margin-left: var(--spacing-sm);
+}
+
+#concept-search {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: var(--font-size-md);
+    color: var(--text-primary);
+    padding: var(--spacing-sm) 0;
+}
+
+.search-clear-btn {
+    background: none;
+    border: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.3s;
+    padding: 0;
+    margin-right: var(--spacing-sm);
+    display: none;  /* מוסתר בהתחלה */
+}
+
+.search-clear-btn:hover {
+    color: var(--color-danger);
+}
+
+/* סיכום האלגוריתם */
+.algorithm-summary {
+    margin-bottom: var(--spacing-xl);
+}
+
+.summary-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid var(--border-color);
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+/* המשך עבור קובץ concepts.css */
+
+/* סיכום האלגוריתם - המשך */
+.icon-container {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    color: var(--white);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    margin-left: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+ }
+ 
+ .summary-header h2 {
+    font-size: var(--font-size-lg);
+    color: var(--text-primary);
+ }
+ 
+ .summary-content {
+    color: var(--text-secondary);
+    line-height: 1.6;
+ }
+ 
+ .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+ }
+ 
+ .summary-item {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--border-color);
+ }
+ 
+ .summary-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+ }
+ 
+ .item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+ }
+ 
+ .summary-item h3 {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+ }
+ 
+ .summary-item p {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+ }
+ 
+ .summary-note {
+    font-style: italic;
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+ }
+ 
+ /* קטגוריות מושגים */
+ .concepts-categories {
+    margin-bottom: var(--spacing-xl);
+ }
+ 
+ .section-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+ }
+ 
+ .section-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary);
+    border-radius: var(--border-radius-sm);
+ }
+ 
+ .categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--spacing-md);
+ }
+ 
+ .category-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-lg);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+ }
+ 
+ .category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+ }
+ 
+ .category-card:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--color-primary-light), var(--color-primary));
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s;
+ }
+ 
+ .category-card:hover:before {
+    transform: scaleX(1);
+    transform-origin: left;
+ }
+ 
+ .category-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--bg-secondary);
+    color: var(--color-primary);
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+    transition: all 0.3s;
+ }
+ 
+ .category-card:hover .category-icon {
+    background-color: var(--color-primary);
+    color: var(--white);
+    transform: scale(1.1);
+ }
+ 
+ .category-card h3 {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+ }
+ 
+ .category-card p {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+ }
+ 
+ /* רשימת מושגים */
+ .concepts-list {
+    margin-bottom: var(--spacing-xl);
+ }
+ 
+ .concepts-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+ }
+ 
+ .filter-btn {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: var(--font-size-sm);
+ }
+ 
+ .filter-btn:hover, .filter-btn.active {
+    background-color: var(--color-primary);
+    color: var(--white);
+    border-color: var(--color-primary);
+ }
+ 
+ .concepts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+ }
+ 
+ .concept-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid var(--border-color);
+ }
+ 
+ .concept-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+ }
+ 
+ .concept-card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-md);
+    position: relative;
+    padding-bottom: var(--spacing-sm);
+ }
+ 
+ .concept-card h3:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 2px;
+    background: var(--color-primary-light);
+ }
+ 
+ .concept-card p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+ }
+ 
+ /* סוגי גרפים וזיהוי מגמות */
+ .charts-section {
+    background-color: var(--bg-secondary);
+    padding: var(--spacing-xl) 0;
+    border-radius: var(--border-radius-lg);
+    margin-bottom: var(--spacing-xl);
+ }
+ 
+ .charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+ }
+ 
+ .chart-type-card {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: transform 0.3s;
+    border: 1px solid var(--border-color);
+ }
+ 
+ .chart-type-card:hover {
+    transform: translateY(-5px);
+ }
+ 
+ .chart-type-header {
+    background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    color: var(--white);
+    padding: var(--spacing-md);
+    text-align: center;
+ }
+ 
+ .chart-type-header h3 {
+    margin: 0;
+    font-size: var(--font-size-md);
+ }
+ 
+ .chart-type-image {
+    text-align: center;
+    padding: var(--spacing-md);
+    background-color: var(--bg-secondary);
+ }
+ 
+ .chart-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-sm);
+ }
+ 
+ .chart-type-description {
+    padding: var(--spacing-md);
+    color: var(--text-secondary);
+ }
+ 
+ .chart-type-description p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+ }
+ 
+ .chart-pattern {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-md);
+    margin-top: var(--spacing-md);
+ }
+ 
+ .chart-pattern h4 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+    font-size: var(--font-size-sm);
+ }
+ 
+ .chart-pattern ul {
+    margin: 0;
+    padding-right: var(--spacing-md);
+ }
+ 
+ .chart-pattern li {
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+ }
+ 
+ .trend, .pattern {
+    font-weight: bold;
+ }
+ 
+ .trend.up {
+    color: var(--stock-positive);
+ }
+ 
+ .trend.down {
+    color: var(--stock-negative);
+ }
+ 
+ .trend.sideways {
+    color: var(--stock-neutral);
+ }
+ 
+ .pattern {
+    color: var(--color-primary);
+ }
+ 
+ /* אנימציות והופעות */
+ @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+ }
+ 
+ .concept-card, .summary-item, .category-card, .chart-type-card {
+    animation: fadeIn 0.6s ease forwards;
+    opacity: 0;
+ }
+ 
+ .concept-card:nth-child(2n), .summary-item:nth-child(2n), .category-card:nth-child(2n), .chart-type-card:nth-child(2n) {
+    animation-delay: 0.2s;
+ }
+ 
+ .concept-card:nth-child(3n), .summary-item:nth-child(3n), .category-card:nth-child(3n), .chart-type-card:nth-child(3n) {
+    animation-delay: 0.4s;
+ }
+ 
+ .concept-card:nth-child(4n), .summary-item:nth-child(4n), .category-card:nth-child(4n), .chart-type-card:nth-child(4n) {
+    animation-delay: 0.6s;
+ }
+ 
+ /* תאימות למכשירים ניידים */
+ @media (max-width: 768px) {
+    .concepts-hero {
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .page-title {
+        font-size: var(--font-size-xl);
+    }
+    
+    .concepts-filter {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: var(--spacing-sm);
+    }
+    
+    .filter-btn {
+        white-space: nowrap;
+    }
+    
+    .categories-grid, .concepts-grid, .charts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+ }
+ 
+ /* תמיכה במצב כהה */
+ [data-theme="dark"] .concept-search-box {
+    background-color: var(--bg-card);
+    box-shadow: var(--shadow-md);
+ }
+ 
+ [data-theme="dark"] #concept-search {
+    color: var(--text-primary);
+ }
+ 
+ [data-theme="dark"] .chart-type-image {
+    background-color: var(--bg-card);
+ }
+ 
+ [data-theme="dark"] .chart-pattern {
+    background-color: var(--bg-card-dark, #2a2a2a);
+ }
+ 
+ [data-theme="dark"] .summary-item, 
+ [data-theme="dark"] .category-icon {
+    background-color: var(--bg-card-dark, #2a2a2a);
+ }
