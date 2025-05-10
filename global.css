@@ -1,5 +1,5 @@
 /* global.css - סגנונות משותפים לכל העמודים */
-@import url('/variables.css');
+@import url(/variables.css);
 
 /* הגדרות כלליות */
 * {

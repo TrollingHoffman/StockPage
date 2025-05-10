@@ -1,5 +1,5 @@
 /* style.css - סגנונות עבור דף הבית ותצוגת מניות */
-@import url('/variables.css');
+@import url(/variables.css);
 
 /* אזור החיפוש */
 .search-container {
