@@ -524,7 +524,7 @@
 /* תאימות למכשירים ניידים */
 @media (max-width: 768px) {
     .concepts-hero {
-        padding: var(--spacing-lg) var(--spacing-md);
+        padding: var(--spacing-md);
     }
     
     .page-title {
@@ -537,53 +537,28 @@
         padding-bottom: var(--spacing-sm);
     }
     
-    .filter-btn {
-        white-space: nowrap;
+    /* התאמת מיקום חיפוש */
+    .concept-search-box {
+        flex-direction: row;
     }
     
+    /* תיקון גריד של כרטיסים */
     .categories-grid, .concepts-grid, .charts-grid {
         grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
     }
     
     .summary-grid {
         grid-template-columns: 1fr;
     }
-}
-
-@media (max-width: 576px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
+    
+    /* תיקון מרווחים בדף INFO */
+    .algorithm-summary, .concepts-categories, .concepts-list, .charts-section {
+        margin-bottom: var(--spacing-md);
+        padding: var(--spacing-md) 0;
     }
-}
-
-/* תמיכה במצב כהה */
-[data-theme="dark"] .concept-search-box {
-    background-color: var(--bg-card);
-    box-shadow: var(--shadow-md);
-}
-
-[data-theme="dark"] #concept-search {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .chart-type-image {
-    background-color: var(--bg-card);
-}
-
-[data-theme="dark"] .chart-pattern {
-    background-color: var(--bg-card-dark, #2a2a2a);
-}
-
-[data-theme="dark"] .summary-item, 
-[data-theme="dark"] .category-icon {
-    background-color: var(--bg-card-dark, #2a2a2a);
-}
-
-/* הדגשת מילות חיפוש */
-.highlight {
-    background-color: var(--color-primary-light);
-    color: white;
-    padding: 0 3px;
-    border-radius: 3px;
+    
+    .chart-type-card {
+        margin-bottom: var(--spacing-md);
+    }
 }

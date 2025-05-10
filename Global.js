@@ -17,8 +17,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // פונקציית אתחול תפריט המבורגר
 function initHamburgerMenu() {
-    const hamburger = document.getElementById('hamburger');
-    const navMenu = document.getElementById('nav-menu');
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
     
     if (hamburger && navMenu) {
         hamburger.addEventListener('click', function() {
@@ -26,11 +26,21 @@ function initHamburgerMenu() {
             navMenu.classList.toggle('active');
         });
         
-        document.querySelectorAll('.nav-link').forEach(link => {
+        // סגירת התפריט בלחיצה על קישור
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
             link.addEventListener('click', function() {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
             });
+        });
+        
+        // סגירת התפריט בלחיצה מחוץ לתפריט
+        document.addEventListener('click', function(event) {
+            if (!navMenu.contains(event.target) && !hamburger.contains(event.target) && navMenu.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
         });
     }
 }

@@ -354,42 +354,20 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .navbar-container {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: var(--navbar-height);
-        flex-direction: column;
-        background-color: var(--bg-navbar);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow-navbar);
-        padding: var(--spacing-lg) 0;
-        gap: var(--spacing-lg);
-        z-index: 999;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-item {
-        margin: 0;
-        width: 100%;
-    }
-    
-    .nav-link {
+    .hamburger {
         display: block;
-        padding: var(--spacing-md);
+        cursor: pointer;
     }
     
-    .nav-link.active::after {
-        display: none;
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
     }
     
-}
-    /* הצגת המבורגר רק במסכים ק
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}    /* הצגת המבורגר רק במסכים ק
