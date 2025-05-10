@@ -1,183 +1,5 @@
-@import url('/variabls.css');
-/* הגדרות כלליות */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* כיוון טקסט ושפה */
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    direction: rtl;
-    text-align: right;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    line-height: 1.6;
-    padding: 0;
-    margin: 0;
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-}
-
-/* קונטיינר */
-.container {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
-}
-
-/* עיצוב כותרות */
-h1, h2, h3, h4, h5, h6 {
-    margin-bottom: var(--spacing-md);
-    color: var(--text-primary);
-    font-weight: var(--font-weight-bold);
-    transition: color var(--transition-speed);
-}
-
-h1 {
-    font-size: var(--font-size-3xl);
-    margin-top: var(--spacing-lg);
-}
-
-h2 {
-    font-size: var(--font-size-2xl);
-    margin-top: var(--spacing-md);
-}
-
-h3 {
-    font-size: var(--font-size-xl);
-}
-
-/* קישורים */
-a {
-    color: var(--color-primary);
-    text-decoration: none;
-    transition: color var(--transition-speed);
-}
-
-a:hover {
-    color: var(--color-primary-dark);
-}
-
-/* כפתורים */
-button {
-    cursor: pointer;
-    font-size: var(--font-size-md);
-    padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius-md);
-    border: none;
-    transition: background-color var(--transition-speed-fast), color var(--transition-speed-fast), transform var(--transition-speed-fast);
-}
-
-button:hover {
-    transform: translateY(-2px);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-/* תפריט ניווט */
-.navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: var(--bg-navbar);
-    box-shadow: var(--shadow-navbar);
-    transition: background-color var(--transition-speed);
-    height: var(--navbar-height);
-    display: flex;
-    align-items: center;
-}
-
-.navbar-container {
-    width: 100%;
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar-logo .logo {
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-primary);
-    transition: color var(--transition-speed);
-}
-
-.navbar-links {
-    display: flex;
-    align-items: center;
-}
-
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: var(--spacing-lg);
-}
-
-.nav-item {
-    position: relative;
-}
-
-.nav-link {
-    color: var(--text-primary);
-    font-weight: var(--font-weight-medium);
-    padding: var(--spacing-sm) var(--spacing-md);
-    transition: color var(--transition-speed);
-}
-
-.nav-link:hover, .nav-link.active {
-    color: var(--color-primary);
-}
-
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -10px;
-    height: 3px;
-    background-color: var(--color-primary);
-    border-radius: 3px;
-}
-
-#theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: var(--font-size-lg);
-    cursor: pointer;
-    background: none;
-    padding: var(--spacing-sm);
-    border-radius: 50%;
-    transition: background-color var(--transition-speed);
-}
-
-#theme-toggle:hover {
-    background-color: var(--bg-secondary);
-}
-
-/* המבורגר מנו */
-.hamburger {
-    display: none;
-    cursor: pointer;
-}
-
-.bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--text-primary);
-}
+/* style.css - סגנונות עבור דף הבית ותצוגת מניות */
+@import url('/variables.css');
 
 /* אזור החיפוש */
 .search-container {
@@ -188,6 +10,29 @@ button:active {
     text-align: center;
     box-shadow: var(--shadow-md);
     transition: background-color var(--transition-speed);
+    position: relative;
+    overflow: hidden;
+}
+
+.search-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at bottom right, var(--color-primary-light), transparent 70%);
+    opacity: 0.2;
+    z-index: 0;
+}
+
+.search-container h1 {
+    position: relative;
+    z-index: 1;
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
+    transition: color var(--transition-speed);
 }
 
 .search-box {
@@ -195,6 +40,8 @@ button:active {
     justify-content: center;
     max-width: 600px;
     margin: var(--spacing-lg) auto 0;
+    position: relative;
+    z-index: 1;
 }
 
 #stock-search {
@@ -206,28 +53,34 @@ button:active {
     background-color: var(--bg-input);
     color: var(--text-primary);
     outline: none;
-    transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
+    transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed), box-shadow var(--transition-speed);
 }
 
 #stock-search:focus {
     border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(39, 115, 255, 0.2);
 }
 
 #search-button {
-    padding: var(--spacing-sm) var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-xl);
     background-color: var(--color-primary);
     color: white;
     border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
     font-weight: var(--font-weight-medium);
-    transition: background-color var(--transition-speed);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
 }
 
 #search-button:hover {
     background-color: var(--color-primary-dark);
 }
 
-/* אזור האלגוריתמים והסננים */
-.filters-container, .stock-display, .news-container, .recommendations-container {
+#search-button:active {
+    transform: translateY(1px);
+}
+
+/* אזור תצוגת מניה */
+.stock-display {
+    display: none; /* יוצג רק לאחר חיפוש */
     background-color: var(--bg-card);
     padding: var(--spacing-xl);
     border-radius: var(--border-radius-lg);
@@ -235,101 +88,11 @@ button:active {
     margin: 0 auto var(--spacing-xl);
     max-width: var(--container-max-width);
     transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-.filters-tabs, .news-tabs, .recommendations-tabs {
-    display: flex;
-    overflow-x: auto;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: var(--spacing-lg);
-}
-
-.tab-button {
-    padding: var(--spacing-sm) var(--spacing-lg);
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid transparent;
-    color: var(--text-secondary);
-    font-weight: var(--font-weight-medium);
-    transition: color var(--transition-speed), border-color var(--transition-speed);
-}
-
-.tab-button.active {
-    color: var(--color-primary);
-    border-bottom: 2px solid var(--color-primary);
-    font-weight: var(--font-weight-semibold);
-}
-
-.tab-button:hover {
-    color: var(--color-primary-light);
-}
-
-.filter-tab, .news-tab, .recommendations-tab {
-    display: none;
-}
-
-.filter-tab.active, .news-tab.active, .recommendations-tab.active {
-    display: block;
-}
-
-.filter-params {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--spacing-lg);
-    margin-bottom: var(--spacing-lg);
-}
-
-.param-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.param-group label {
-    margin-bottom: var(--spacing-xs);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-secondary);
-}
-
-.param-group input, .param-group select {
-    padding: var(--spacing-sm);
     border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-sm);
-    background-color: var(--bg-input);
-    color: var(--text-primary);
-    transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
 }
 
-.param-group input:focus, .param-group select:focus {
-    border-color: var(--color-primary);
-    outline: none;
-}
-
-.filter-button {
-    background-color: var(--color-primary);
-    color: white;
-    padding: var(--spacing-sm) var(--spacing-xl);
-    border-radius: var(--border-radius-md);
-    font-weight: var(--font-weight-medium);
-    margin: var(--spacing-md) 0;
-    transition: background-color var(--transition-speed);
-}
-
-.filter-button:hover {
-    background-color: var(--color-primary-dark);
-}
-
-.filter-results {
-    margin-top: var(--spacing-lg);
-    background-color: var(--bg-secondary);
-    border-radius: var(--border-radius-md);
-    padding: var(--spacing-md);
-    min-height: 100px;
-    transition: background-color var(--transition-speed);
-}
-
-/* אזור תצוגת המניה */
-.stock-display {
-    display: none; /* יוצג רק לאחר חיפוש */
+.stock-display:hover {
+    box-shadow: var(--shadow-lg);
 }
 
 .stock-info {
@@ -340,12 +103,24 @@ button:active {
     flex-wrap: wrap;
 }
 
+#stock-name {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    transition: color var(--transition-speed);
+}
+
 .stock-current-value {
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+}
+
+#stock-value {
+    color: var(--text-primary);
+    transition: color var(--transition-speed);
 }
 
 #stock-change {
@@ -366,7 +141,12 @@ button:active {
     padding: var(--spacing-md);
     display: flex;
     flex-direction: column;
-    transition: background-color var(--transition-speed);
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    border: 1px solid var(--border-color);
+}
+
+.metric:hover {
+    transform: translateY(-3px);
 }
 
 .metric-label {
@@ -378,6 +158,8 @@ button:active {
 .metric-value {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    transition: color var(--transition-speed);
 }
 
 .stock-chart-container {
@@ -390,6 +172,13 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+#stock-chart {
+    width: 100%;
+    height: 100%;
 }
 
 .chart-controls {
@@ -397,6 +186,7 @@ button:active {
     justify-content: space-between;
     flex-wrap: wrap;
     gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
 }
 
 .range-selector, .chart-type-selector {
@@ -411,11 +201,13 @@ button:active {
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size-sm);
     transition: background-color var(--transition-speed), color var(--transition-speed);
+    border: 1px solid var(--border-color);
 }
 
 .range-button.active, .chart-type-button.active {
     background-color: var(--color-primary);
     color: white;
+    border-color: var(--color-primary);
 }
 
 .range-button:hover, .chart-type-button:hover {
@@ -445,6 +237,72 @@ button:active {
 }
 
 /* אזור החדשות */
+.news-container, .recommendations-container, .filters-container {
+    background-color: var(--bg-card);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    margin: 0 auto var(--spacing-xl);
+    max-width: var(--container-max-width);
+    transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+    border: 1px solid var(--border-color);
+}
+
+.news-container:hover, .recommendations-container:hover, .filters-container:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+.news-container h2, .recommendations-container h2, .filters-container h2 {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+    transition: color var(--transition-speed);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: var(--spacing-sm);
+}
+
+.news-tabs, .recommendations-tabs, .filters-tabs {
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-lg);
+    gap: var(--spacing-xs);
+}
+
+.tab-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    transition: color var(--transition-speed), border-color var(--transition-speed);
+    white-space: nowrap;
+}
+
+.tab-button.active {
+    color: var(--color-primary);
+    border-bottom: 2px solid var(--color-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+.tab-button:hover {
+    color: var(--color-primary-light);
+}
+
+.news-tab, .recommendations-tab, .filter-tab {
+    display: none;
+}
+
+.news-tab.active, .recommendations-tab.active, .filter-tab.active {
+    display: block;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
 .news-item {
     padding: var(--spacing-md);
     border-bottom: 1px solid var(--border-color);
@@ -465,6 +323,11 @@ button:active {
     margin-bottom: var(--spacing-xs);
     font-size: var(--font-size-md);
     color: var(--text-primary);
+    transition: color var(--transition-speed);
+}
+
+.news-title:hover {
+    color: var(--color-primary);
 }
 
 .news-meta {
@@ -497,6 +360,7 @@ button:active {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: var(--spacing-md);
+    border: 1px solid var(--border-color);
 }
 
 .stock-recommendation:hover {
@@ -514,6 +378,7 @@ button:active {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-xs);
     color: var(--text-primary);
+    transition: color var(--transition-speed);
 }
 
 .recommendation-info {
@@ -570,11 +435,155 @@ button:active {
     margin-top: var(--spacing-md);
 }
 
+/* אזור סננים */
+.filter-params {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.param-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.param-group label {
+    margin-bottom: var(--spacing-xs);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+}
+
+.param-group input, .param-group select {
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    transition: border-color var(--transition-speed), background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.param-group input:focus, .param-group select:focus {
+    border-color: var(--color-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(39, 115, 255, 0.2);
+}
+
+.filter-button {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-xl);
+    border-radius: var(--border-radius-md);
+    font-weight: var(--font-weight-medium);
+    margin: var(--spacing-md) 0;
+    transition: background-color var(--transition-speed);
+}
+
+.filter-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.filter-results {
+    margin-top: var(--spacing-lg);
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    min-height: 100px;
+    transition: background-color var(--transition-speed);
+    border: 1px solid var(--border-color);
+}
+
+.filter-params-summary {
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-sm);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.filter-results-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.filter-result-item {
+    background-color: var(--bg-card);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.filter-result-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.result-title {
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+}
+
+.result-value {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+}
+
+.result-momentum, .result-indicator, .result-change {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-sm);
+}
+
+.result-target {
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-md);
+    color: var(--stock-positive);
+}
+
+.result-details {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+}
+
+.result-mismatch {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+}
+
+.result-direction {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-md);
+}
+
+.result-action-button {
+    background-color: var(--color-primary);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    width: 100%;
+    font-size: var(--font-size-sm);
+    transition: background-color var(--transition-speed);
+}
+
+.result-action-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
 /* === אזור בואו לחקור עוד === */
 .explore-section {
     padding: var(--spacing-xl) 0;
     background-color: var(--bg-secondary);
     margin-top: var(--spacing-xl);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .section-title {
@@ -703,73 +712,6 @@ button:active {
     animation: pulse 1.5s infinite;
 }
 
-/* עיצוב פוטר */
-footer {
-    background-color: var(--bg-footer);
-    color: var(--text-light);
-    padding: var(--spacing-xl) 0;
-    margin-top: var(--spacing-xxl);
-    transition: background-color var(--transition-speed);
-}
-
-.footer-content {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 var(--container-padding);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: var(--spacing-xl);
-}
-
-.footer-logo h3 {
-    font-size: var(--font-size-xl);
-    color: white;
-    margin-bottom: var(--spacing-sm);
-}
-
-.footer-logo p {
-    color: var(--color-gray-400);
-}
-
-.footer-links h4, .footer-disclaimer h4 {
-    color: white;
-    margin-bottom: var(--spacing-md);
-}
-
-.footer-links ul {
-    list-style: none;
-}
-
-.footer-links ul li {
-    margin-bottom: var(--spacing-sm);
-}
-
-.footer-links ul li a {
-    color: var(--color-gray-400);
-    transition: color var(--transition-speed);
-}
-
-.footer-links ul li a:hover {
-    color: white;
-}
-
-.footer-disclaimer p {
-    color: var(--color-gray-400);
-    font-size: var(--font-size-sm);
-    line-height: 1.6;
-}
-
-.footer-bottom {
-    max-width: var(--container-max-width);
-    margin: var(--spacing-xl) auto 0;
-    padding: var(--spacing-lg) var(--container-padding) 0;
-    border-top: 1px solid var(--color-gray-700);
-    text-align: center;
-    font-size: var(--font-size-sm);
-    color: var(--color-gray-500);
-}
-
-
 /* עיצוב רספונסיבי */
 @media (max-width: 992px) {
     .search-container {
@@ -785,6 +727,12 @@ footer {
     .stock-current-value {
         align-items: flex-start;
     }
+    
+    .filters-container, .stock-display, .news-container, .recommendations-container {
+        padding: var(--spacing-lg) var(--spacing-md);
+        margin-left: var(--spacing-md);
+        margin-right: var(--spacing-md);
+    }
 }
 
 @media (max-width: 768px) {
@@ -794,66 +742,6 @@ footer {
     
     .explore-card {
         padding: var(--spacing-md);
-    }
-}
-
-    .navbar-container {
-        padding: 0 var(--spacing-md);
-    }
-    
-    .nav-menu {
-        position: fixed;
-        left: -100%;
-        top: var(--navbar-height);
-        flex-direction: column;
-        background-color: var(--bg-navbar);
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: var(--shadow-navbar);
-        padding: var(--spacing-lg) 0;
-        gap: var(--spacing-lg);
-        z-index: 999;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-item {
-        margin: 0;
-        width: 100%;
-    }
-    
-    .nav-link {
-        display: block;
-        padding: var(--spacing-md);
-    }
-    
-    .nav-link.active::after {
-        display: none;
-    }
-    
-    .hamburger {
-        display: block;
-    }
-    
-    .hamburger.active .bar:nth-child(2) {
-        opacity: 0;
-    }
-    
-    .hamburger.active .bar:nth-child(1) {
-        transform: translateY(8px) rotate(45deg);
-    }
-    
-    .hamburger.active .bar:nth-child(3) {
-        transform: translateY(-8px) rotate(-45deg);
-    }
-    
-    .filters-container, .stock-display, .news-container, .recommendations-container {
-        padding: var(--spacing-lg) var(--spacing-md);
-        margin-left: var(--spacing-md);
-        margin-right: var(--spacing-md);
     }
     
     .chart-controls {
@@ -868,6 +756,15 @@ footer {
     #stock-search {
         width: 60%;
     }
+    
+    .filter-results-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .stock-metrics {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-sm);
+    }
 }
 
 @media (max-width: 576px) {
@@ -881,14 +778,5 @@ footer {
     
     .filter-params {
         grid-template-columns: 1fr;
-    }
-    
-    .stock-metrics {
-        grid-template-columns: 1fr 1fr;
-    }
-    
-    .footer-content {
-        grid-template-columns: 1fr;
-        gap: var(--spacing-lg);
     }
 }

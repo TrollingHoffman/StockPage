@@ -3,37 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מילון מושגים פיננסיים | StockTracker</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>מילון מושגים פיננסיים | StockCal</title>
+    <link rel="stylesheet" href="/global.css">
     <link rel="stylesheet" href="/info.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- תפריט ניווט זהה לעמוד הראשי -->
-    <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="logo">
-                    <a href="index.html">StockTracker <i class="fas fa-chart-line"></i></a>
-                </div>
-                <div class="hamburger" id="hamburger">
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                    <div class="bar"></div>
-                </div>
-                <ul class="nav-menu" id="nav-menu">
-                    <li class="nav-item"><a href="index.html" class="nav-link">עמוד ראשי</a></li>
-                    <li class="nav-item"><a href="concepts.html" class="nav-link active">מילון מושגים</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">אודות</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <button id="theme-toggle" class="theme-toggle" aria-label="החלפת מצב תצוגה">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                </div>
+    <!-- תפריט ניווט משופר -->
+    <nav class="navbar" id="main-navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">
+                <a href="/" class="logo">StockCal <i class="fas fa-chart-line"></i></a>
             </div>
-        </nav>
-    </header>
+            <div class="navbar-links">
+                <ul class="nav-menu" id="nav-menu">
+                    <li class="nav-item"><a href="/index.html" class="nav-link">עמוד הבית</a></li>
+                    <li class="nav-item"><a href="/info.html" class="nav-link active">מושגים</a></li>
+                </ul>
+            </div>
+            <div class="theme-toggle-container">
+                <button id="theme-toggle" class="theme-toggle" aria-label="החלפת מצב תצוגה">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            <div class="hamburger" id="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
 
     <main class="concept-main">
         <!-- כותרת ומבוא -->
@@ -64,7 +63,7 @@
                         <h2>כיצד האלגוריתם שלנו עובד?</h2>
                     </div>
                     <div class="summary-content">
-                        <p>האלגוריתם של StockTracker משלב מספר פרמטרים פיננסיים לניתוח וסינון מניות, כולל:</p>
+                        <p>האלגוריתם של StockCal משלב מספר פרמטרים פיננסיים לניתוח וסינון מניות, כולל:</p>
                         <div class="summary-grid">
                             <div class="summary-item">
                                 <div class="item-icon"><i class="fas fa-chart-line"></i></div>
@@ -228,7 +227,7 @@
                                 <ul>
                                     <li><span class="trend up">מגמת עלייה:</span> סדרה של שיאים ושפלים גבוהים יותר</li>
                                     <li><span class="trend down">מגמת ירידה:</span> סדרה של שיאים ושפלים נמוכים יותר</li>
-                                    <li><span class="trend sideways">מגמה צידית:</span> תנועה אופקית ללא כיוון ברור</li>
+                                    <li><span class="trend sideways">מגמה צידית:</span> תנועה אופקית ללא כיוון מובהק</li>
                                 </ul>
                             </div>
                         </div>
@@ -242,13 +241,13 @@
                             <img src="https://via.placeholder.com/350x200" alt="גרף נרות" class="chart-image">
                         </div>
                         <div class="chart-type-description">
-                            <p>גרף המציג את פתיחה, סגירה, שיא ושפל לכל תקופת זמן. מספק מידע רב יותר מגרף קווי ומאפשר זיהוי דפוסי מסחר.</p>
+                            <p>גרף המציג את מחירי הפתיחה, הסגירה, השיא והשפל של כל תקופת מסחר. מאפשר זיהוי דפוסים ותבניות מחיר.</p>
                             <div class="chart-pattern">
-                                <h4>דפוסי נרות עיקריים:</h4>
+                                <h4>תבניות נפוצות:</h4>
                                 <ul>
-                                    <li><span class="pattern">דוג'י:</span> נר עם גוף קטן מאוד, מעיד על היסוס בשוק</li>
-                                    <li><span class="pattern">פטיש:</span> נר עם צל תחתון ארוך, עשוי להצביע על תחתית</li>
-                                    <li><span class="pattern">בליעה:</span> נר גדול "בולע" את הנר הקודם, מעיד על היפוך אפשרי</li>
+                                    <li><span class="pattern">דוג'י (Doji):</span> נר עם גוף קטן מאוד המעיד על היסוס בשוק</li>
+                                    <li><span class="pattern">פטיש (Hammer):</span> נר עם צל תחתון ארוך המעיד על היפוך במגמת ירידה</li>
+                                    <li><span class="pattern">בולעת (Engulfing):</span> נר שמכסה לחלוטין את הנר הקודם, מעיד על היפוך</li>
                                 </ul>
                             </div>
                         </div>
@@ -256,19 +255,19 @@
                     
                     <div class="chart-type-card">
                         <div class="chart-type-header">
-                            <h3>גרף OHLC (Open-High-Low-Close)</h3>
+                            <h3>גרף OHLC</h3>
                         </div>
                         <div class="chart-type-image">
                             <img src="https://via.placeholder.com/350x200" alt="גרף OHLC" class="chart-image">
                         </div>
                         <div class="chart-type-description">
-                            <p>דומה לגרף נרות, אך מציג את המידע באמצעות קווים וסימונים. הקו האופקי משמאל מייצג את הפתיחה, מימין את הסגירה, והקו האנכי מייצג את הטווח בין השיא לשפל.</p>
+                            <p>גרף המציג את מחירי הפתיחה, השיא, השפל והסגירה של כל תקופת מסחר באמצעות קווים אנכיים וקווים אופקיים קצרים.</p>
                             <div class="chart-pattern">
                                 <h4>יתרונות:</h4>
                                 <ul>
-                                    <li>תצוגה נקייה יחסית</li>
-                                    <li>קל לזהות טווחי מסחר יומיים</li>
-                                    <li>מתאים במיוחד לניתוח טכני מתקדם</li>
+                                    <li>הצגה ברורה של טווח המחירים בכל תקופה</li>
+                                    <li>קל לזהות את המחיר הגבוה והנמוך ביותר</li>
+                                    <li>מתאים במיוחד לניתוח טכני מתקדם ולזיהוי תבניות מחיר</li>
                                 </ul>
                             </div>
                         </div>
@@ -276,20 +275,19 @@
                     
                     <div class="chart-type-card">
                         <div class="chart-type-header">
-                            <h3>דפוסים טכניים נפוצים</h3>
+                            <h3>תבניות מחיר (Chart Patterns)</h3>
                         </div>
                         <div class="chart-type-image">
-                            <img src="https://via.placeholder.com/350x200" alt="דפוסים טכניים" class="chart-image">
+                            <img src="https://via.placeholder.com/350x200" alt="תבניות מחיר" class="chart-image">
                         </div>
                         <div class="chart-type-description">
-                            <p>דפוסים חוזרים בגרפים שעשויים להצביע על המשך מגמה או היפוך מגמה.</p>
+                            <p>תבניות מחיר הן תצורות גרפיות המופיעות בתרשימי מחירים ומשמשות לחיזוי תנועות עתידיות של המחיר.</p>
                             <div class="chart-pattern">
-                                <h4>דפוסים מרכזיים:</h4>
+                                <h4>תבניות נפוצות:</h4>
                                 <ul>
-                                    <li><span class="pattern">ראש וכתפיים:</span> דפוס היפוך מגמה נפוץ</li>
-                                    <li><span class="pattern">משולש:</span> דפוס המשכיות או היפוך, בהתאם לצורתו</li>
-                                    <li><span class="pattern">דגל/דגלון:</span> דפוס המשכיות מגמה לאחר תיקון קצר</li>
-                                    <li><span class="pattern">תעלה:</span> תנועת מחיר בין שני קווים מקבילים</li>
+                                    <li><span class="pattern">ראש וכתפיים:</span> תבנית היפוך המעידה על שינוי מגמה מעלייה לירידה</li>
+                                    <li><span class="pattern">דגל:</span> תבנית המשכיות המעידה על המשך המגמה הקיימת</li>
+                                    <li><span class="pattern">משולש:</span> תבנית התכנסות המעידה על ירידה בתנודתיות לפני פריצה</li>
                                 </ul>
                             </div>
                         </div>
@@ -298,76 +296,26 @@
             </div>
         </section>
     </main>
-
+    
+    <!-- פוטר -->
     <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    StockTracker <i class="fas fa-chart-line"></i>
-                </div>
-                <div class="footer-links">
-                    <a href="index.html">עמוד ראשי</a>
-                    <a href="concepts.html">מילון מושגים</a>
-                    <a href="#about">אודות</a>
-                </div>
-                <div class="footer-social">
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                </div>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <h3>StockCal <i class="fas fa-chart-line"></i></h3>
+                <p>מערכת מחקר מניות מתקדמת</p>
             </div>
-            <div class="footer-copyright">
-                &copy; 2023 StockTracker. כל הזכויות שמורות.
+            <div class="footer-disclaimer">
+                <h4>הצהרה</h4>
+                <p>המידע המוצג באתר זה הוא למטרות מידע בלבד ואינו מהווה המלצה להשקעה. השקעה בשוק ההון כרוכה בסיכונים.</p>
             </div>
         </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 StockCal. כל הזכויות שמורות.</p>
+        </div>
     </footer>
-    <script src="/back.js"></script>
-    <script src="concepts.js"></script>
-    <script>
-        // סקריפט בסיסי להתאמת תצוגה
-        document.addEventListener('DOMContentLoaded', function() {
-            // מנגנון תפריט המבורגר
-            const hamburger = document.getElementById('hamburger');
-            const navMenu = document.getElementById('nav-menu');
-            
-            hamburger.addEventListener('click', function() {
-                hamburger.classList.toggle('active');
-                navMenu.classList.toggle('active');
-            });
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function() {
-                    hamburger.classList.remove('active');
-                    navMenu.classList.remove('active');
-                });
-            });
-            
-            // מנגנון החלפת מצב תצוגה (כהה/בהיר)
-            const themeToggle = document.getElementById('theme-toggle');
-            const icon = themeToggle.querySelector('i');
-            
-            if (localStorage.getItem('theme') === 'dark') {
-                document.documentElement.setAttribute('data-theme', 'dark');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-            
-            themeToggle.addEventListener('click', function() {
-                const currentTheme = document.documentElement.getAttribute('data-theme');
-                
-                if (currentTheme === 'dark') {
-                    document.documentElement.setAttribute('data-theme', 'light');
-                    localStorage.setItem('theme', 'light');
-                    icon.classList.remove('fa-sun');
-                    icon.classList.add('fa-moon');
-                } else {
-                    document.documentElement.setAttribute('data-theme', 'dark');
-                    localStorage.setItem('theme', 'dark');
-                    icon.classList.remove('fa-moon');
-                    icon.classList.add('fa-sun');
-                }
-            });
-        });
-    </script>
+
+    <!-- סקריפטים -->
+    <script src="/global.js"></script>
+    <script src="/info.js"></script>
 </body>
 </html>

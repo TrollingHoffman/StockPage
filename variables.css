@@ -1,4 +1,4 @@
-/* קובץ משתני עיצוב גלובליים */
+/* variables.css - קובץ משתני עיצוב גלובליים */
 :root {
     /* צבעים בסיסיים - מצב רגיל (בהיר) */
     --color-primary: #2773ff;
@@ -30,6 +30,7 @@
     --bg-primary: #ffffff;
     --bg-secondary: #f5f7fa;
     --bg-card: #ffffff;
+    --bg-card-dark: #2a2a2a;
     --bg-input: #ffffff;
     --bg-header: #f0f4fa;
     --bg-footer: #2c3e50;
@@ -145,4 +146,52 @@
     --color-secondary-light: #1eae7c;
     --color-secondary: #0e9b6a;
     --color-secondary-dark: #087f55;
+}
+
+/* קלאס הדגשה למילות חיפוש */
+.highlight {
+    background-color: var(--color-primary-light);
+    color: white;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+/* אנימציות כניסה לכרטיסים */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* הודעת אין תוצאות */
+.no-results-message {
+    grid-column: 1 / -1;
+    padding: var(--spacing-lg);
+    text-align: center;
+    background-color: var(--bg-secondary);
+    border-radius: var(--border-radius-md);
+    color: var(--text-muted);
+    font-size: var(--font-size-lg);
+}
+
+/* אינדיקטור טעינה */
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    color: var(--text-muted);
+    font-size: var(--font-size-lg);
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
 }

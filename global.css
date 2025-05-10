@@ -1,0 +1,395 @@
+/* global.css - סגנונות משותפים לכל העמודים */
+@import url('/variables.css');
+
+/* הגדרות כלליות */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* כיוון טקסט ושפה */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    direction: rtl;
+    text-align: right;
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* קונטיינר */
+.container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* עיצוב כותרות */
+h1, h2, h3, h4, h5, h6 {
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+    font-weight: var(--font-weight-bold);
+    transition: color var(--transition-speed);
+}
+
+h1 {
+    font-size: var(--font-size-3xl);
+    margin-top: var(--spacing-lg);
+}
+
+h2 {
+    font-size: var(--font-size-2xl);
+    margin-top: var(--spacing-md);
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+}
+
+/* קישורים */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-speed);
+}
+
+a:hover {
+    color: var(--color-primary-dark);
+}
+
+/* כפתורים */
+button {
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    border: none;
+    transition: background-color var(--transition-speed-fast), color var(--transition-speed-fast), transform var(--transition-speed-fast);
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* תפריט ניווט */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: var(--bg-navbar);
+    box-shadow: var(--shadow-navbar);
+    transition: background-color var(--transition-speed);
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+}
+
+.navbar-container {
+    width: 100%;
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo .logo {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    transition: color var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.navbar-logo .logo i {
+    font-size: var(--font-size-lg);
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: var(--spacing-lg);
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-link {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-medium);
+    padding: var(--spacing-sm) var(--spacing-md);
+    transition: color var(--transition-speed);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-primary);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -10px;
+    height: 3px;
+    background-color: var(--color-primary);
+    border-radius: 3px;
+}
+
+.theme-toggle-container {
+    margin-right: var(--spacing-md);
+}
+
+#theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    cursor: pointer;
+    background: none;
+    padding: var(--spacing-sm);
+    border-radius: 50%;
+    transition: background-color var(--transition-speed);
+    color: var(--text-primary);
+}
+
+#theme-toggle:hover {
+    background-color: var(--bg-secondary);
+    transform: rotate(15deg);
+}
+
+/* המבורגר מנו - מוסתר כברירת מחדל במסכים גדולים */
+.hamburger {
+    display: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--text-primary);
+}
+
+/* התראות */
+.notification-container {
+    position: fixed;
+    top: var(--spacing-md);
+    left: var(--spacing-md);
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.notification {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    min-width: 300px;
+    max-width: 450px;
+    transform: translateX(0);
+    opacity: 1;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+.notification.closing {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.notification i {
+    margin-left: var(--spacing-md);
+    font-size: 1.2rem;
+}
+
+.notification-message {
+    flex: 1;
+}
+
+.notification-close {
+    cursor: pointer;
+    margin-right: var(--spacing-md);
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
+.notification.info i {
+    color: var(--color-info);
+}
+
+.notification.success i {
+    color: var(--color-success);
+}
+
+.notification.warning i {
+    color: var(--color-warning);
+}
+
+.notification.error i {
+    color: var(--color-danger);
+}
+
+/* עדכון סגנון פוטר אחיד - להוספה לקובץ global.css */
+footer {
+    background-color: var(--bg-footer);
+    color: var(--text-light);
+    padding: var(--spacing-xl) 0;
+    margin-top: var(--spacing-xxl);
+    transition: background-color var(--transition-speed);
+}
+
+.footer-content {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+}
+
+.footer-logo h3 {
+    font-size: var(--font-size-xl);
+    color: white;
+    margin-bottom: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.footer-logo p {
+    color: var(--color-gray-400);
+}
+
+.footer-disclaimer h4 {
+    color: white;
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-disclaimer p {
+    color: var(--color-gray-400);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.footer-bottom {
+    max-width: var(--container-max-width);
+    margin: var(--spacing-xl) auto 0;
+    padding: var(--spacing-lg) var(--container-padding) 0;
+    border-top: 1px solid var(--color-gray-700);
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+/* הסרת סגנון החלק footer-links שאינו בשימוש עוד */
+
+/* עיצוב רספונסיבי - תפריט המבורגר רק למסכים קטנים */
+    .hamburger {
+        display: block;
+    }
+    
+    .hamburger.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .hamburger.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    
+    .hamburger.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    
+    h1 {
+        font-size: var(--font-size-2xl);
+    }
+    
+    h2 {
+        font-size: var(--font-size-xl);
+    }
+    
+    .notification {
+        min-width: auto;
+        width: calc(100vw - 40px);
+        max-width: 450px;
+    }
+
+@media (max-width: 576px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: var(--navbar-height);
+        flex-direction: column;
+        background-color: var(--bg-navbar);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: var(--shadow-navbar);
+        padding: var(--spacing-lg) 0;
+        gap: var(--spacing-lg);
+        z-index: 999;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-item {
+        margin: 0;
+        width: 100%;
+    }
+    
+    .nav-link {
+        display: block;
+        padding: var(--spacing-md);
+    }
+    
+    .nav-link.active::after {
+        display: none;
+    }
+    
+}
+    /* הצגת המבורגר רק במסכים ק
