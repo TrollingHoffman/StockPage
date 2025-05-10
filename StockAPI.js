@@ -1,10 +1,7 @@
-// stockApi.js - מודול לניהול קריאות API ונתוני מניות
+// stockApi.js - מודול מעודכן לניהול קריאות API ונתוני מניות באמצעות Stockdio API
 
-// מפתחות API
-const API_KEYS = {
-    FINNHUB: 'd0eerv1r01qkbclau660d0eerv1r01qkbclau66g',
-    STOCKDATA: 'lNzHKanOvI3TcSInUsknlajmAfC9OPdaH2ivMWAn',
-};
+// מפתח API
+const API_KEY = '7AE8EC3A9B0140D4835C74E5899E348F'; // מפתח דוגמה מהתמונות, החלף במפתח האמיתי שלך
 
 // קטגוריות מניות וקרנות סל
 const CATEGORIES = {
@@ -122,7 +119,7 @@ function isDataValid(timestamp) {
 }
 
 /**
- * קבלת נתוני מניה מה-API
+ * קבלת נתוני מניה מה-API של Stockdio
  * @param {string} symbol - סמל המניה
  * @returns {Promise<Object>} - הבטחה עם נתוני המניה
  */
@@ -138,8 +135,10 @@ async function getStockData(symbol) {
         
         console.log(`מבצע קריאת API עבור מניה: ${normalizedSymbol}`);
         
-        // קריאה ל-API
-        const response = await fetch(`https://api.stockdata.org/v1/data/quote?symbols=${normalizedSymbol}&api_key=${API_KEYS.STOCKDATA}`);
+        // קריאה ל-API מה-Stockdio לקבלת מידע על החברה
+        const url = `https://api.stockdio.com/data/financial/info/v1/GetCompanyInfo?app-key=${API_KEY}&symbol=${normalizedSymbol}`;
+        
+        const response = await fetch(url);
         
         if (!response.ok) {
             throw new Error(`שגיאת API: ${response.status} ${response.statusText}`);
@@ -147,71 +146,32 @@ async function getStockData(symbol) {
         
         const data = await response.json();
         
-        if (!data.data || data.data.length === 0) {
-            // ננסה לחפש את המניה לפי שם
-            return await searchStockByName(symbol);
+        if (!data || !data.data || !data.data.symbol) {
+            throw new Error(`לא נמצאו נתונים עבור הסמל: ${normalizedSymbol}`);
         }
+        
+        // עיבוד נתונים - התאמה לפורמט הקודם
+        const processedData = {
+            symbol: data.data.symbol,
+            name: data.data.company,
+            price: parseFloat(data.data.exchangeClosingPrice),
+            day_change: parseFloat(data.data.dayChange) || 0,
+            change_percent: parseFloat(data.data.changePercentage) || 0,
+            volume: parseInt(data.data.volume || 0),
+            market_cap: parseFloat(data.data.marketCap || 0),
+            pe: parseFloat(data.data.priceToEarningsRatio || 0),
+            currency: data.data.currency
+        };
         
         // שמירה במטמון
         cache.stockData[normalizedSymbol] = {
-            data: data.data[0],
+            data: processedData,
             timestamp: Date.now()
         };
         
-        return data.data[0];
+        return processedData;
     } catch (error) {
         console.error(`שגיאה בקבלת נתוני מניה ${symbol}:`, error);
-        throw error;
-    }
-}
-
-/**
- * חיפוש מניה לפי שם
- * @param {string} searchTerm - מונח חיפוש
- * @returns {Promise<Object>} - הבטחה עם נתוני המניה
- */
-async function searchStockByName(searchTerm) {
-    try {
-        console.log(`מחפש מניה לפי שם: ${searchTerm}`);
-        
-        const response = await fetch(`https://api.stockdata.org/v1/entity/search?search=${encodeURIComponent(searchTerm)}&api_key=${API_KEYS.STOCKDATA}`);
-        
-        if (!response.ok) {
-            throw new Error(`שגיאת API בחיפוש: ${response.status} ${response.statusText}`);
-        }
-        
-        const data = await response.json();
-        
-        if (!data.data || data.data.length === 0) {
-            throw new Error(`לא נמצאו תוצאות עבור החיפוש: ${searchTerm}`);
-        }
-        
-        // מצאנו תוצאה, נקבל מידע מלא על המניה
-        const foundSymbol = data.data[0].ticker;
-        console.log(`נמצא סמל: ${foundSymbol} עבור החיפוש: ${searchTerm}`);
-        
-        // קריאה נוספת לקבלת מידע מלא
-        const stockResponse = await fetch(`https://api.stockdata.org/v1/data/quote?symbols=${foundSymbol}&api_key=${API_KEYS.STOCKDATA}`);
-        
-        if (!stockResponse.ok) {
-            throw new Error(`שגיאת API בקבלת נתוני מניה: ${stockResponse.status}`);
-        }
-        
-        const stockData = await stockResponse.json();
-        
-        if (!stockData.data || stockData.data.length === 0) {
-            throw new Error(`לא נמצאו נתונים עבור הסמל: ${foundSymbol}`);
-        }
-        
-        // שמירה במטמון
-        cache.stockData[foundSymbol] = {
-            data: stockData.data[0],
-            timestamp: Date.now()
-        };
-        
-        return stockData.data[0];
-    } catch (error) {
-        console.error(`שגיאה בחיפוש מניה לפי שם:`, error);
         throw error;
     }
 }
@@ -226,48 +186,22 @@ async function getStockHistory(symbol, range = '1m') {
     try {
         const normalizedSymbol = normalizeSymbol(symbol);
         
-        // חישוב תאריכי התחלה וסיום
-        const endDate = new Date();
-        let startDate = new Date();
-        
+        // המרת טווח לימים עבור ה-API של Stockdio
+        let days;
         switch (range) {
-            case '1d':
-                startDate.setDate(endDate.getDate() - 1);
-                break;
-            case '5d':
-                startDate.setDate(endDate.getDate() - 5);
-                break;
-            case '1m':
-                startDate.setMonth(endDate.getMonth() - 1);
-                break;
-            case '3m':
-                startDate.setMonth(endDate.getMonth() - 3);
-                break;
-            case '1y':
-                startDate.setFullYear(endDate.getFullYear() - 1);
-                break;
-            case '5y':
-                startDate.setFullYear(endDate.getFullYear() - 5);
-                break;
-            default:
-                startDate.setMonth(endDate.getMonth() - 1);
+            case '1d': days = 1; break;
+            case '5d': days = 5; break;
+            case '1m': days = 30; break;
+            case '3m': days = 90; break;
+            case '1y': days = 365; break;
+            case '5y': days = 1825; break;
+            default: days = 30;
         }
         
-        // פורמט תאריכים
-        const formatDate = (date) => {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        };
+        // יצירת URL עם פרמטרים מתאימים
+        const url = `https://api.stockdio.com/data/financial/prices/v1/GetHistoricalPrices?app-key=${API_KEY}&symbol=${normalizedSymbol}&days=${days}&addVolume=true`;
         
-        const start = formatDate(startDate);
-        const end = formatDate(endDate);
-        
-        console.log(`מבקש נתוני היסטוריה עבור ${normalizedSymbol} מתאריך ${start} עד ${end}`);
-        
-        // קריאה ל-API
-        const response = await fetch(`https://api.stockdata.org/v1/data/eod?symbols=${normalizedSymbol}&date_from=${start}&date_to=${end}&sort=asc&api_key=${API_KEYS.STOCKDATA}`);
+        const response = await fetch(url);
         
         if (!response.ok) {
             throw new Error(`שגיאת API בקבלת נתוני היסטוריה: ${response.status}`);
@@ -275,11 +209,19 @@ async function getStockHistory(symbol, range = '1m') {
         
         const data = await response.json();
         
-        if (!data.data || data.data.length === 0) {
+        if (!data || !data.data || !data.data.quotes || data.data.quotes.length === 0) {
             throw new Error(`לא נמצאו נתוני היסטוריה עבור ${normalizedSymbol}`);
         }
         
-        return data.data;
+        // עיבוד נתונים לפורמט המתאים לגרף
+        return data.data.quotes.map(item => ({
+            date: item.date,
+            open: parseFloat(item.open),
+            high: parseFloat(item.high),
+            low: parseFloat(item.low),
+            close: parseFloat(item.close),
+            volume: parseInt(item.volume || 0)
+        }));
     } catch (error) {
         console.error(`שגיאה בקבלת נתוני היסטוריה:`, error);
         throw error;
@@ -289,59 +231,47 @@ async function getStockHistory(symbol, range = '1m') {
 /**
  * קבלת חדשות עבור מניה
  * @param {string} symbol - סמל המניה
- * @returns {Promise<Object>} - הבטחה עם חדשות ממקורות שונים
+ * @returns {Promise<Object>} - הבטחה עם חדשות
  */
 async function getStockNews(symbol) {
     try {
         const normalizedSymbol = normalizeSymbol(symbol);
         
+        // יצירת מקורות חדשות ריקים
         const result = {
-            finnhub: [],
-            stockdata: []
+            stockdata: [],
+            finnhub: []
         };
         
-        // קבל תאריכים לחיפוש
-        const endDate = new Date();
-        const startDate = new Date();
-        startDate.setDate(endDate.getDate() - 30);  // 30 ימים אחורה
-        
-        const formatDate = (date) => {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        };
-        
-        // קבלת חדשות מ-Finnhub
         try {
-            const finnhubResponse = await fetch(`https://finnhub.io/api/v1/company-news?symbol=${normalizedSymbol}&from=${formatDate(startDate)}&to=${formatDate(endDate)}&token=${API_KEYS.FINNHUB}`);
+            // קריאה ל-API של Stockdio לקבלת חדשות
+            const url = `https://api.stockdio.com/data/financial/news/v1/GetNewsBySymbol?app-key=${API_KEY}&symbol=${normalizedSymbol}&count=10`;
             
-            if (finnhubResponse.ok) {
-                const finnhubData = await finnhubResponse.json();
+            const response = await fetch(url);
+            
+            if (response.ok) {
+                const data = await response.json();
                 
-                if (Array.isArray(finnhubData)) {
-                    // מגביל ל-10 פריטים
-                    result.finnhub = finnhubData.slice(0, 10);
+                if (data && data.data && data.data.news) {
+                    // עיבוד נתונים לפורמט המתאים
+                    result.stockdata = data.data.news.map(item => ({
+                        title: item.title,
+                        url: item.url,
+                        published_at: item.date,
+                        source: item.source
+                    }));
+                    
+                    // העתקת נתונים גם למקור finnhub כדי לתמוך בממשק הקיים
+                    result.finnhub = data.data.news.map(item => ({
+                        headline: item.title,
+                        url: item.url,
+                        datetime: new Date(item.date).getTime() / 1000,
+                        source: item.source
+                    }));
                 }
             }
-        } catch (finnhubError) {
-            console.error('שגיאה בקבלת חדשות מ-Finnhub:', finnhubError);
-        }
-        
-        // קבלת חדשות מ-StockData
-        try {
-            const stockdataResponse = await fetch(`https://api.stockdata.org/v1/news/all?symbols=${normalizedSymbol}&filter_entities=true&language=en&api_key=${API_KEYS.STOCKDATA}`);
-            
-            if (stockdataResponse.ok) {
-                const stockdataData = await stockdataResponse.json();
-                
-                if (stockdataData.data && Array.isArray(stockdataData.data)) {
-                    // מגביל ל-10 פריטים
-                    result.stockdata = stockdataData.data.slice(0, 10);
-                }
-            }
-        } catch (stockdataError) {
-            console.error('שגיאה בקבלת חדשות מ-StockData:', stockdataError);
+        } catch (error) {
+            console.error('שגיאה בקבלת חדשות:', error);
         }
         
         return result;
@@ -359,46 +289,34 @@ async function getStockNews(symbol) {
 async function getRecommendations(budget = 'low') {
     try {
         // רשימת מניות לבדיקה
-        const techStocks = CATEGORIES.POPULAR_STOCKS.tech.join(',');
-        const israelStocks = CATEGORIES.POPULAR_STOCKS.israel.join(',');
+        const stocksToCheck = budget === 'low' 
+            ? [...CATEGORIES.POPULAR_STOCKS.tech.slice(0, 3), ...CATEGORIES.POPULAR_STOCKS.israel.slice(0, 3)]
+            : [...CATEGORIES.POPULAR_STOCKS.tech.slice(3), ...CATEGORIES.POPULAR_STOCKS.finance.slice(0, 3)];
         
-        // קבלת מידע על המניות
-        const response = await fetch(`https://api.stockdata.org/v1/data/quote?symbols=${techStocks},${israelStocks}&api_key=${API_KEYS.STOCKDATA}`);
+        // קבלת מידע על כל המניות
+        const recommendations = [];
         
-        if (!response.ok) {
-            throw new Error(`שגיאת API בקבלת המלצות: ${response.status}`);
+        for (const symbol of stocksToCheck) {
+            try {
+                const stockData = await getStockData(symbol);
+                
+                // חישוב ציון אלגוריתמי פשוט
+                const momentum = stockData.change_percent || 0;
+                const pe = stockData.pe || 20;
+                const score = calculateStockScore(momentum, pe);
+                
+                recommendations.push({
+                    ...stockData,
+                    score,
+                    recommendation: score >= 6 ? 'קניה' : score <= 3 ? 'מכירה' : 'המתנה'
+                });
+            } catch (error) {
+                console.warn(`לא ניתן לקבל נתונים עבור ${symbol}:`, error);
+            }
         }
         
-        const data = await response.json();
-        
-        if (!data.data || data.data.length === 0) {
-            throw new Error('לא נמצאו נתונים למניות המבוקשות');
-        }
-        
-        // סינון לפי תקציב
-        let filteredStocks;
-        
-        if (budget === 'low') {
-            // מניות במחיר נמוך מ-100$
-            filteredStocks = data.data.filter(stock => stock.price < 100).sort((a, b) => a.price - b.price);
-        } else {
-            // מניות במחיר 100$ ומעלה
-            filteredStocks = data.data.filter(stock => stock.price >= 100).sort((a, b) => b.price - a.price);
-        }
-        
-        // הוספת ציון אלגוריתמי
-        return filteredStocks.map(stock => {
-            // חישוב ציון לפי מומנטום ומכפיל רווח
-            const momentum = stock.change_percent || 0;
-            const pe = stock.pe || 20;
-            const score = calculateStockScore(momentum, pe);
-            
-            return {
-                ...stock,
-                score,
-                recommendation: score >= 6 ? 'קניה' : score <= 3 ? 'מכירה' : 'המתנה'
-            };
-        });
+        // מיון לפי ציון, מהגבוה לנמוך
+        return recommendations.sort((a, b) => b.score - a.score);
     } catch (error) {
         console.error(`שגיאה בקבלת המלצות:`, error);
         throw error;
@@ -415,101 +333,100 @@ async function getRecommendations(budget = 'low') {
 async function findEtfOpportunities(sector = 'all', mismatchThreshold = 1.0, direction = 'both') {
     try {
         // בניית רשימת סמלים לבדיקה
-        let symbols = [];
+        let symbolPairs = [];
         
         if (sector === 'all') {
             // כל הסקטורים
-            Object.values(CATEGORIES.ETF).forEach(mapping => {
-                symbols.push(mapping.ticker, mapping.leverageBull, mapping.leverageBear);
+            Object.entries(CATEGORIES.ETF).forEach(([key, mapping]) => {
+                symbolPairs.push({
+                    sector: key,
+                    sectorName: mapping.description,
+                    baseSymbol: mapping.ticker,
+                    bullSymbol: mapping.leverageBull,
+                    bearSymbol: mapping.leverageBear
+                });
             });
         } else if (CATEGORIES.ETF[sector]) {
             // סקטור ספציפי
-            symbols.push(
-                CATEGORIES.ETF[sector].ticker,
-                CATEGORIES.ETF[sector].leverageBull,
-                CATEGORIES.ETF[sector].leverageBear
-            );
+            const mapping = CATEGORIES.ETF[sector];
+            symbolPairs.push({
+                sector,
+                sectorName: mapping.description,
+                baseSymbol: mapping.ticker,
+                bullSymbol: mapping.leverageBull,
+                bearSymbol: mapping.leverageBear
+            });
         } else {
             throw new Error(`סקטור לא חוקי: ${sector}`);
-        }
-        
-        // הסרת כפילויות
-        symbols = [...new Set(symbols)];
-        
-        // קבלת נתוני מחירים עדכניים
-        const response = await fetch(`https://api.stockdata.org/v1/data/quote?symbols=${symbols.join(',')}&api_key=${API_KEYS.STOCKDATA}`);
-        
-        if (!response.ok) {
-            throw new Error(`שגיאת API בקבלת נתוני ETF: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        
-        if (!data.data || data.data.length === 0) {
-            throw new Error('לא נמצאו נתונים ל-ETF');
         }
         
         // מציאת אי התאמות
         const opportunities = [];
         
-        // עבור על כל הסקטורים הרלוונטיים
-        Object.entries(CATEGORIES.ETF).forEach(([sectorKey, mapping]) => {
-            if (sector !== 'all' && sectorKey !== sector) return;
-            
-            // חיפוש המדד והETF המתאימים
-            const baseIndex = data.data.find(stock => stock.symbol === mapping.ticker);
-            const bullETF = data.data.find(stock => stock.symbol === mapping.leverageBull);
-            const bearETF = data.data.find(stock => stock.symbol === mapping.leverageBear);
-            
-            if (baseIndex && bullETF && bearETF) {
-                const baseChange = baseIndex.change_percent || 0;
-                const bullChange = bullETF.change_percent || 0;
-                const bearChange = bearETF.change_percent || 0;
+        for (const pair of symbolPairs) {
+            try {
+                // קבלת נתונים על הבסיס וה-ETFs
+                const baseData = await getStockData(pair.baseSymbol);
+                const bullData = await getStockData(pair.bullSymbol);
+                const bearData = await getStockData(pair.bearSymbol);
                 
-                // בדיקת הזדמנויות לעלייה - כאשר ה-ETF עם מינוף חיובי לא עלה מספיק
-                const bullMismatch = (baseChange > 0) && (bullChange < baseChange * 3 - mismatchThreshold);
-                
-                // בדיקת הזדמנויות לירידה - כאשר ה-ETF עם מינוף שלילי לא עלה מספיק כשהמדד יורד
-                const bearMismatch = (baseChange < 0) && (bearChange < Math.abs(baseChange) * 3 - mismatchThreshold);
-                
-                // הוספת הזדמנויות בהתאם לכיוון המבוקש
-                if ((direction === 'up' || direction === 'both') && bullMismatch) {
-                    opportunities.push({
-                        sector: sectorKey,
-                        sectorName: mapping.description,
-                        symbol: bullETF.symbol,
-                        name: bullETF.name || bullETF.symbol,
-                        price: bullETF.price,
-                        change_percent: bullETF.change_percent,
-                        base_symbol: baseIndex.symbol,
-                        base_change: baseIndex.change_percent,
-                        expected_change: baseIndex.change_percent * 3,
-                        actual_change: bullETF.change_percent,
-                        mismatch: (baseIndex.change_percent * 3 - bullETF.change_percent).toFixed(2),
-                        direction: 'up',
-                        score: calculateOpportunityScore(baseIndex.change_percent * 3, bullETF.change_percent)
-                    });
+                if (baseData && bullData && bearData) {
+                    const baseChange = baseData.change_percent || 0;
+                    const bullChange = bullData.change_percent || 0;
+                    const bearChange = bearData.change_percent || 0;
+                    
+                    // בדיקת הזדמנויות לעלייה
+                    if ((direction === 'up' || direction === 'both') && baseChange > 0) {
+                        const expectedBull = baseChange * 3;
+                        const bullMismatch = expectedBull - bullChange;
+                        
+                        if (bullMismatch > mismatchThreshold) {
+                            opportunities.push({
+                                sector: pair.sector,
+                                sectorName: pair.sectorName,
+                                symbol: pair.bullSymbol,
+                                name: bullData.name || pair.bullSymbol,
+                                price: bullData.price,
+                                change_percent: bullChange,
+                                base_symbol: baseData.symbol,
+                                base_change: baseChange,
+                                expected_change: expectedBull,
+                                actual_change: bullChange,
+                                mismatch: bullMismatch.toFixed(2),
+                                direction: 'up',
+                                score: calculateOpportunityScore(expectedBull, bullChange)
+                            });
+                        }
+                    }
+                    
+                    // בדיקת הזדמנויות לירידה
+                    if ((direction === 'down' || direction === 'both') && baseChange < 0) {
+                        const expectedBear = Math.abs(baseChange) * 3;
+                        const bearMismatch = expectedBear - bearChange;
+                        
+                        if (bearMismatch > mismatchThreshold) {
+                            opportunities.push({
+                                sector: pair.sector,
+                                sectorName: pair.sectorName,
+                                symbol: pair.bearSymbol,
+                                name: bearData.name || pair.bearSymbol,
+                                price: bearData.price,
+                                change_percent: bearChange,
+                                base_symbol: baseData.symbol,
+                                base_change: baseChange,
+                                expected_change: expectedBear,
+                                actual_change: bearChange,
+                                mismatch: bearMismatch.toFixed(2),
+                                direction: 'down',
+                                score: calculateOpportunityScore(expectedBear, bearChange)
+                            });
+                        }
+                    }
                 }
-                
-                if ((direction === 'down' || direction === 'both') && bearMismatch) {
-                    opportunities.push({
-                        sector: sectorKey,
-                        sectorName: mapping.description,
-                        symbol: bearETF.symbol,
-                        name: bearETF.name || bearETF.symbol,
-                        price: bearETF.price,
-                        change_percent: bearETF.change_percent,
-                        base_symbol: baseIndex.symbol,
-                        base_change: baseIndex.change_percent,
-                        expected_change: Math.abs(baseIndex.change_percent) * 3,
-                        actual_change: bearETF.change_percent,
-                        mismatch: (Math.abs(baseIndex.change_percent) * 3 - bearETF.change_percent).toFixed(2),
-                        direction: 'down',
-                        score: calculateOpportunityScore(Math.abs(baseIndex.change_percent) * 3, bearETF.change_percent)
-                    });
-                }
+            } catch (error) {
+                console.warn(`שגיאה בבדיקת הזדמנויות לסקטור ${pair.sector}:`, error);
             }
-        });
+        }
         
         // מיון הזדמנויות לפי גודל אי ההתאמה (מהגדול לקטן)
         return opportunities.sort((a, b) => b.score - a.score);
@@ -528,49 +445,53 @@ async function findEtfOpportunities(sector = 'all', mismatchThreshold = 1.0, dir
  */
 async function findMomentumStocks(threshold = 1.5, timeframe = 5, profitTarget = 2.0) {
     try {
-        // נבדוק מניות פופולריות
+        // רשימת מניות לבדיקה
         const allStocks = [
             ...CATEGORIES.POPULAR_STOCKS.tech,
             ...CATEGORIES.POPULAR_STOCKS.finance,
-            ...CATEGORIES.POPULAR_STOCKS.pharma,
-            ...CATEGORIES.POPULAR_STOCKS.retail,
+            ...CATEGORIES.POPULAR_STOCKS.pharma.slice(0, 3),
             ...CATEGORIES.POPULAR_STOCKS.israel
         ];
         
         // הסרת כפילויות
         const uniqueStocks = [...new Set(allStocks)];
         
-        // קבלת מידע על המניות
-        const response = await fetch(`https://api.stockdata.org/v1/data/quote?symbols=${uniqueStocks.join(',')}&api_key=${API_KEYS.STOCKDATA}`);
+        // בדיקת מומנטום לכל מניה
+        const momentumStocks = [];
         
-        if (!response.ok) {
-            throw new Error(`שגיאת API בחיפוש מומנטום: ${response.status}`);
+        for (const symbol of uniqueStocks) {
+            try {
+                // קבלת נתוני היסטוריה
+                const historyData = await getStockHistory(symbol, timeframe === 5 ? '5d' : timeframe === 30 ? '1m' : '3m');
+                
+                if (historyData && historyData.length >= 2) {
+                    // חישוב שינוי באחוזים
+                    const oldestPrice = historyData[0].close;
+                    const currentPrice = historyData[historyData.length - 1].close;
+                    const changePercent = ((currentPrice - oldestPrice) / oldestPrice) * 100;
+                    
+                    // בדיקה אם יש מומנטום מספיק
+                    if (changePercent >= threshold) {
+                        // קבלת פרטי מניה נוספים
+                        const stockData = await getStockData(symbol);
+                        const targetPrice = stockData.price * (1 + profitTarget / 100);
+                        
+                        momentumStocks.push({
+                            ...stockData,
+                            momentum: changePercent,
+                            target_price: targetPrice.toFixed(2),
+                            profit_target: profitTarget,
+                            score: calculateMomentumScore(changePercent, threshold)
+                        });
+                    }
+                }
+            } catch (error) {
+                console.warn(`לא ניתן לבדוק מומנטום עבור ${symbol}:`, error);
+            }
         }
         
-        const data = await response.json();
-        
-        if (!data.data || data.data.length === 0) {
-            throw new Error('לא נמצאו נתונים למניות המבוקשות');
-        }
-        
-        // סינון מניות לפי מומנטום
-        const momentumStocks = data.data.filter(stock => {
-            const stockMomentum = stock.change_percent || 0;
-            return stockMomentum >= threshold;
-        });
-        
-        // הוספת מידע נוסף
-        return momentumStocks.map(stock => {
-            const targetPrice = stock.price * (1 + profitTarget / 100);
-            
-            return {
-                ...stock,
-                momentum: stock.change_percent,
-                target_price: targetPrice.toFixed(2),
-                profit_target: profitTarget,
-                score: calculateMomentumScore(stock.change_percent, threshold)
-            };
-        }).sort((a, b) => b.momentum - a.momentum);
+        // מיון לפי גודל המומנטום
+        return momentumStocks.sort((a, b) => b.momentum - a.momentum);
     } catch (error) {
         console.error(`שגיאה בחיפוש מניות מומנטום:`, error);
         throw error;
@@ -586,93 +507,172 @@ async function findMomentumStocks(threshold = 1.5, timeframe = 5, profitTarget =
  */
 async function findTechnicalIndicatorStocks(indicator = 'rsi', condition = 'oversold', timeframe = 'daily') {
     try {
-        // סימולציה של אינדיקטורים טכניים (במערכת אמיתית יהיה חיבור ל-API שמספק אינדיקטורים)
-        // בדוגמה זו, אנחנו פשוט משתמשים בנתוני שינוי יומי כסימולציה
+        // המרת timeframe למספר ימים
+        let days;
+        switch (timeframe) {
+            case 'daily': days = 30; break;
+            case 'weekly': days = 90; break;
+            case 'monthly': days = 365; break;
+            default: days = 30;
+        }
         
-        // נבדוק מניות פופולריות
+        // רשימת מניות לבדיקה
         const popularStocks = [
             ...CATEGORIES.POPULAR_STOCKS.tech,
-            ...CATEGORIES.POPULAR_STOCKS.finance
+            ...CATEGORIES.POPULAR_STOCKS.finance.slice(0, 3),
+            ...CATEGORIES.POPULAR_STOCKS.israel.slice(0, 3)
         ];
         
-        // קבלת נתוני מניות
-        const response = await fetch(`https://api.stockdata.org/v1/data/quote?symbols=${popularStocks.join(',')}&api_key=${API_KEYS.STOCKDATA}`);
+        // הסרת כפילויות
+        const uniqueStocks = [...new Set(popularStocks)];
         
-        if (!response.ok) {
-            throw new Error(`שגיאת API בחיפוש אינדיקטורים טכניים: ${response.status}`);
-        }
+        // תוצאות המתאימות לקריטריון
+        const matchingStocks = [];
         
-        const data = await response.json();
-        
-        if (!data.data || data.data.length === 0) {
-            throw new Error('לא נמצאו נתונים למניות המבוקשות');
-        }
-        
-        // סימולציה של סינון לפי אינדיקטורים
-        let filteredStocks = [];
-        
-        if (indicator === 'rsi') {
-            if (condition === 'oversold') {
-                // בסימולציה, נחשיב מניות שירדו ביותר מ-2% כ-oversold
-                filteredStocks = data.data.filter(stock => (stock.change_percent || 0) <= -2);
-            } else if (condition === 'overbought') {
-                // בסימולציה, נחשיב מניות שעלו ביותר מ-3% כ-overbought
-                filteredStocks = data.data.filter(stock => (stock.change_percent || 0) >= 3);
-            }
-        } else if (indicator === 'macd') {
-            // סימולציה פשוטה - מניות עם שינוי בין -1% ל-1% כאילו באיזור של חציית קווים
-            if (condition === 'crossing') {
-                filteredStocks = data.data.filter(stock => {
-                    const change = stock.change_percent || 0;
-                    return change > -1 && change < 1;
-                });
-            }
-        } else if (indicator === 'moving_avg') {
-            // סימולציה פשוטה - מניות שמחירן בין -5% ל+5% מהממוצע שלהן (לא אמיתי, רק להדגמה)
-            filteredStocks = data.data.filter(stock => {
-                const change = stock.change_percent || 0;
-                return change > -5 && change < 5;
-            });
-        }
-        
-        // הוספת מידע על האינדיקטור (מסומלץ)
-        return filteredStocks.map(stock => {
-            let indicatorValue = 0;
-            let indicatorText = '';
-            
-            if (indicator === 'rsi') {
-                // סימולציה - מניות שירדו יותר מקבלות RSI נמוך יותר
-                indicatorValue = 50 - (stock.change_percent || 0) * 5;
-                indicatorText = `RSI: ${indicatorValue.toFixed(2)}`;
+        for (const symbol of uniqueStocks) {
+            try {
+                // קבלת נתוני היסטוריה
+                const historyData = await getStockHistory(symbol, days === 30 ? '1m' : days === 90 ? '3m' : '1y');
                 
-                if (indicatorValue < 30) {
-                    indicatorText += ' (Oversold)';
-                } else if (indicatorValue > 70) {
-                    indicatorText += ' (Overbought)';
+                if (!historyData || historyData.length < 14) continue;
+                
+                // חישוב אינדיקטור טכני
+                let indicatorValue = 0;
+                let indicatorText = '';
+                let isMatch = false;
+                
+                if (indicator === 'rsi') {
+                    // חישוב RSI פשוט
+                    indicatorValue = calculateSimpleRSI(historyData);
+                    indicatorText = `RSI: ${indicatorValue.toFixed(2)}`;
+                    
+                    if (condition === 'oversold' && indicatorValue < 30) {
+                        isMatch = true;
+                        indicatorText += ' (Oversold)';
+                    } else if (condition === 'overbought' && indicatorValue > 70) {
+                        isMatch = true;
+                        indicatorText += ' (Overbought)';
+                    }
+                } else if (indicator === 'macd') {
+                    // חישוב MACD פשוט (הפרש בין ממוצעים)
+                    const macdData = calculateSimpleMACD(historyData);
+                    indicatorValue = macdData.signal;
+                    indicatorText = `MACD: ${macdData.macd.toFixed(2)}, Signal: ${macdData.signal.toFixed(2)}`;
+                    
+                    if (condition === 'crossing' && Math.abs(macdData.macd - macdData.signal) < 0.1) {
+                        isMatch = true;
+                        indicatorText += ' (Crossing)';
+                    }
+                } else if (indicator === 'moving_avg') {
+                    // חישוב חציית ממוצעים נעים
+                    const maData = calculateMovingAverages(historyData);
+                    indicatorValue = maData.shortTerm - maData.longTerm;
+                    indicatorText = `MA Diff: ${indicatorValue.toFixed(2)}`;
+                    
+                    if (condition === 'crossing' && Math.abs(indicatorValue) < 0.5) {
+                        isMatch = true;
+                        indicatorText += ' (Crossing)';
+                    }
                 }
-            } else if (indicator === 'macd') {
-                // סימולציה פשוטה
-                indicatorValue = (stock.change_percent || 0) * 0.2;
-                indicatorText = `MACD: ${indicatorValue.toFixed(2)}`;
-            } else if (indicator === 'moving_avg') {
-                // סימולציה פשוטה
-                const avgDiff = (stock.change_percent || 0) * 0.5;
-                indicatorText = `MA Diff: ${avgDiff.toFixed(2)}%`;
+                
+                // אם מתאים לקריטריון, הוסף לתוצאות
+                if (isMatch) {
+                    const stockData = await getStockData(symbol);
+                    
+                    matchingStocks.push({
+                        ...stockData,
+                        indicator_type: indicator,
+                        indicator_value: indicatorValue,
+                        indicator_text: indicatorText,
+                        condition: condition,
+                        timeframe: timeframe
+                    });
+                }
+            } catch (error) {
+                console.warn(`לא ניתן לחשב אינדיקטורים עבור ${symbol}:`, error);
             }
-            
-            return {
-                ...stock,
-                indicator_type: indicator,
-                indicator_value: indicatorValue,
-                indicator_text: indicatorText,
-                condition: condition,
-                timeframe: timeframe
-            };
-        });
+        }
+        
+        return matchingStocks;
     } catch (error) {
         console.error(`שגיאה בחיפוש אינדיקטורים טכניים:`, error);
         throw error;
     }
+}
+
+// פונקציות עזר לחישוב אינדיקטורים טכניים
+function calculateSimpleRSI(historyData) {
+    // חישוב פשוט של RSI
+    let gains = 0;
+    let losses = 0;
+    
+    for (let i = 1; i < historyData.length; i++) {
+        const change = historyData[i].close - historyData[i-1].close;
+        if (change > 0) {
+            gains += change;
+        } else {
+            losses += Math.abs(change);
+        }
+    }
+    
+    const avgGain = gains / (historyData.length - 1);
+    const avgLoss = losses / (historyData.length - 1);
+    
+    if (avgLoss === 0) return 100;
+    
+    const rs = avgGain / avgLoss;
+    return 100 - (100 / (1 + rs));
+}
+
+function calculateSimpleMACD(historyData) {
+    // חישוב פשוט של MACD (ללא חישוב מדויק)
+    const closePrices = historyData.map(item => item.close);
+    
+    // חישוב ממוצע נע קצר (12 ימים)
+    const shortTermEMA = calculateEMA(closePrices, 12);
+    
+    // חישוב ממוצע נע ארוך (26 ימים)
+    const longTermEMA = calculateEMA(closePrices, 26);
+    
+    // חישוב MACD
+    const macd = shortTermEMA - longTermEMA;
+    
+    // חישוב קו איתות (9 ימים)
+    const signal = calculateEMA([...Array(17).fill(0), macd], 9);
+    
+    return { macd, signal };
+}
+
+function calculateMovingAverages(historyData) {
+    const closePrices = historyData.map(item => item.close);
+    
+    // חישוב ממוצע נע קצר (20 ימים)
+    const shortTerm = calculateSMA(closePrices, 20);
+    
+    // חישוב ממוצע נע ארוך (50 ימים)
+    const longTerm = calculateSMA(closePrices, 50);
+    
+    return { shortTerm, longTerm };
+}
+
+function calculateSMA(prices, period) {
+    if (prices.length < period) return prices.reduce((a, b) => a + b, 0) / prices.length;
+    
+    const slice = prices.slice(prices.length - period);
+    return slice.reduce((a, b) => a + b, 0) / period;
+}
+
+function calculateEMA(prices, period) {
+    if (prices.length < period) return calculateSMA(prices, prices.length);
+    
+    const k = 2 / (period + 1);
+    let ema = calculateSMA(prices.slice(0, period), period);
+    
+    for (let i = period; i < prices.length; i++) {
+        ema = prices[i] * k + ema * (1 - k);
+    }
+    
+    return ema;
 }
 
 /**

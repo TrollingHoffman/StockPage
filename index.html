@@ -276,13 +276,6 @@
                 <h3>StockCal <i class="fas fa-chart-line"></i></h3>
                 <p>מערכת מחקר מניות מתקדמת</p>
             </div>
-            <div class="footer-links">
-                <h4>קישורים</h4>
-                <ul>
-                    <li><a href="/">עמוד הבית</a></li>
-                    <li><a href="/info.html">מושגים</a></li>
-                </ul>
-            </div>
             <div class="footer-disclaimer">
                 <h4>הצהרה</h4>
                 <p>המידע המוצג באתר זה הוא למטרות מידע בלבד ואינו מהווה המלצה להשקעה. השקעה בשוק ההון כרוכה בסיכונים.</p>
@@ -297,5 +290,112 @@
     <script src="/global.js"></script>
     <script src="/StockAPI.js"></script>
     <script src="/back.js"></script>
+    
+    <!-- תסריט עבור iframe של Stockdio -->
+    <script>
+    // עדכון פונקציית loadStockData כדי לשלב iframe ישירות
+    function loadStockData(symbol) {
+        // הצגת מחוון טעינה
+        document.getElementById('stock-name').textContent = 'טוען...';
+
+        try {
+            // נרמול הסמל
+            const normalizedSymbol = symbol.trim().toUpperCase();
+            
+            // יצירת iframe לגרף Stockdio
+            const API_KEY = '7AE8EC3A9B0140D4835C74E5899E348F'; // החלף למפתח האמיתי שלך
+            const iframeUrl = `https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=${API_KEY}&symbol=${normalizedSymbol}&dividends=true&splits=true&days=365`;
+            
+            // הוספת iframe לאזור הגרף
+            const chartContainer = document.getElementById('stock-chart');
+            chartContainer.innerHTML = `<iframe frameBorder="0" scrolling="no" width="100%" height="400" src="${iframeUrl}"></iframe>`;
+            
+            // נסיון להשיג נתונים נוספים על המניה
+            document.getElementById('stock-name').textContent = normalizedSymbol;
+            
+            // שימוש ב-StockAPI לנסות לקבל מידע נוסף
+            StockAPI.getStockData(normalizedSymbol)
+            .then(stockData => {
+                // עדכון פרטי המניה בממשק
+                updateStockInfo(stockData);
+            })
+            .catch(error => {
+                console.error('שגיאה בטעינת נתוני המניה:', error);
+                // אם אין נתונים מפורטים, עדיין מציג את הגרף
+                document.getElementById('stock-value').textContent = '0.00';
+                document.getElementById('stock-change').textContent = '0.00 (0.00%)';
+                document.getElementById('stock-change').className = 'neutral';
+                document.getElementById('stock-volume').textContent = '0';
+                document.getElementById('stock-turnover').textContent = '$0';
+                document.getElementById('stock-market-cap').textContent = '$0';
+                document.getElementById('stock-pe').textContent = '0';
+            });
+            
+            // טעינת חדשות רלוונטיות
+            loadNewsForStock(normalizedSymbol);
+            
+            // עדכון זמן עדכון אחרון
+            updateLastUpdateTime();
+        } catch (error) {
+            console.error('שגיאה כללית:', error);
+            document.getElementById('stock-name').textContent = 'שגיאה בטעינת נתוני המניה';
+            document.getElementById('stock-chart').innerHTML = '<p>לא ניתן לטעון את הגרף</p>';
+            showNotification(error.message, 'error');
+        }
+    }
+
+    // עדכון פונקציית updateChartRange כדי לשנות את הימים בiframe
+    function updateChartRange(range) {
+        if (!currentStock) return;
+        
+        // המרת טווח לימים
+        let days;
+        switch (range) {
+            case '1d': days = 1; break;
+            case '5d': days = 5; break;
+            case '1m': days = 30; break;
+            case '3m': days = 90; break;
+            case '1y': days = 365; break;
+            case '5y': days = 1825; break;
+            default: days = 30;
+        }
+        
+        // עדכון iframe עם טווח הזמן החדש
+        const API_KEY = '7AE8EC3A9B0140D4835C74E5899E348F'; // החלף למפתח האמיתי שלך
+        const iframeUrl = `https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=${API_KEY}&symbol=${currentStock}&dividends=true&splits=true&days=${days}`;
+        
+        const chartContainer = document.getElementById('stock-chart');
+        chartContainer.innerHTML = `<iframe frameBorder="0" scrolling="no" width="100%" height="400" src="${iframeUrl}"></iframe>`;
+    }
+
+    // עדכון פונקציית updateChartType כדי לשנות את סוג הגרף בiframe
+    function updateChartType(type) {
+        if (!currentStock) return;
+        
+        // המרת סוג הגרף לפרמטר המתאים
+        let displayType;
+        switch (type) {
+            case 'candle': displayType = 'Candlestick'; break;
+            case 'ohlc': displayType = 'OHLC'; break;
+            case 'line':
+            default: displayType = 'Line';
+        }
+        
+        // קבלת מספר הימים הנוכחי מה-iframe
+        const currentIframe = document.querySelector('#stock-chart iframe');
+        if (!currentIframe) return;
+        
+        const currentSrc = currentIframe.src;
+        const daysMatch = currentSrc.match(/days=(\d+)/);
+        const days = daysMatch ? daysMatch[1] : '365';
+        
+        // עדכון iframe עם סוג הגרף החדש
+        const API_KEY = '7AE8EC3A9B0140D4835C74E5899E348F'; // החלף למפתח האמיתי שלך
+        const iframeUrl = `https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=${API_KEY}&symbol=${currentStock}&dividends=true&splits=true&days=${days}&displayPrices=${displayType}`;
+        
+        const chartContainer = document.getElementById('stock-chart');
+        chartContainer.innerHTML = `<iframe frameBorder="0" scrolling="no" width="100%" height="400" src="${iframeUrl}"></iframe>`;
+    }
+    </script>
 </body>
 </html>
